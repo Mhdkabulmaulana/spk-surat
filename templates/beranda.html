@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+
+{% block title %}Beranda{% endblock %}
+
+{% block content %}
+
+<!-- <h1 class="text-2xl font-bold mb-2">Urgensi Disposisi Surat</h1> -->
+<h3 class="text-2xl font-bold mb-6">Bidang Akuntansi - Badan Keuangan dan Aset Daerah Provinisi Sumatera Utara</h3>
+
+<!-- Ringkasan -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+  <!-- Total Surat Masuk -->
+  <div class="bg-blue-500 text-white rounded-lg shadow p-6 flex items-center">
+    <div class="w-12 h-12 bg-blue-700 flex items-center justify-center rounded-full">
+      <!-- Ikon envelope -->
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 4h16v16H4z M4 4l8 8 8-8"/>
+      </svg>
+    </div>
+    <div class="ml-4">
+      <p class="text-sm">Total Surat Masuk</p>
+      <p class="text-2xl font-bold">{{ total_surat }} Surat</p>
+    </div>
+  </div>
+
+  <!-- Surat Belum Disposisi -->
+  <div class="bg-pink-400 text-white rounded-lg shadow p-6 flex items-center">
+    <div class="w-12 h-12 bg-pink-700 flex items-center justify-center rounded-full">
+      <!-- Ikon jam -->
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 8v4l3 3"/>
+      </svg>
+    </div>
+    <div class="ml-4">
+      <p class="text-sm">Total Belum Disposisi</p>
+      <p class="text-2xl font-bold">{{ belum_disposisi }} Surat</p>
+    </div>
+  </div>
+
+  <!-- Surat Selesai -->
+  <div class="bg-purple-500 text-white rounded-lg shadow p-6 flex items-center">
+    <div class="w-12 h-12 bg-purple-700 flex items-center justify-center rounded-full">
+      <!-- Ikon ceklis -->
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M5 13l4 4L19 7"/>
+      </svg>
+    </div>
+    <div class="ml-4">
+      <p class="text-sm">Total Sudah Disposisi</p>
+      <p class="text-2xl font-bold">{{ sudah_disposisi }} Surat</p>
+    </div>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+  <!-- Surat Urgent -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-lg font-semibold mb-4">Surat Urgent</h2>
+    <table class="min-w-full border border-gray-200 text-sm">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="text-center px-4 py-2">Nomor Surat</th>
+          <th class="py-2 px-4 text-center">Ranking</th>
+          <th class="py-2 px-4 text-center">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for h in urgent_terbaru %}
+        <tr class="border-t">
+          <td class="text-center py-2 px-4">{{ h.surat }}</td>
+          <td class="text-center py-2 px-4">
+                    {% if h.ranking == 1 %}
+                        <span class="badge bg-success">1</span>
+                    {% elif h.ranking == 2 %}
+                        <span class="badge bg-warning">2</span>
+                    {% else %}
+                        <span class="badge bg-secondary">{{ h.ranking }}</span>
+                    {% endif %}
+                </td>
+                <td class="text-center py-2 px-4">
+                {% if h.preferensi >= 0.8 %}
+                    🔥 Sangat Prioritas
+                {% elif h.preferensi >= 0.6 %}
+                    ⚡ Prioritas
+                {% else %}
+                    📄 Biasa
+                {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="3" class="text-center text-gray-500">Tidak ada data urgent</td></tr>
+          {% endfor %}
+      </tbody>
+    </table>
+    <div class="mt-4 text-right">
+      <a href="{% url 'hasil' %}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Lihat Semua</a>
+    </div>
+  </div>
+
+  <!-- Data Surat Terbaru -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-lg font-semibold mb-4">Data Surat Terbaru</h2>
+    <table class="min-w-full border border-gray-200 text-sm">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="text-center px-4 py-2">Nomor Surat</th>
+          <th class="text-center px-4 py-2">Disposisi</th>
+          <th class="text-center px-4 py-2">Perihal</th>
+          <th class="text-center px-4 py-2">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in surat_terbaru %}
+        <tr class="border-t">
+          <td class="text-center px-4 py-2">{{ s.no_surat }}</td>
+          <td class="text-center px-4 py-2">{{ s.disposisi.tujuan }}</td>
+          <td class="text-center px-4 py-2">{{ s.perihal }}</td>
+          <td class="text-center px-4 py-2">
+            {% if s.status.nama == "Selesai" %}
+              <span class="px-2 py-1 bg-green-500 text-white rounded">Selesai</span>
+            {% elif s.status.nama == "Proses" %}
+              <span class="px-2 py-1 bg-yellow-500 text-white rounded">Proses</span>
+            {% elif s.status.nama == "Ditunda" %}
+              <span class="px-2 py-1 bg-red-500 text-white rounded">Ditunda</span>
+            {% elif s.status.nama == "Arsip" %}
+              <span class="px-2 py-1 bg-gray-500 text-white rounded">Arsip</span>
+            {% elif s.status.nama == "Diteruskan" %}
+              <span class="px-2 py-1 bg-purple-500 text-white rounded">Diteruskan</span>
+            {% else %}
+              <span class="px-2 py-1 bg-blue-500 text-white rounded">{{ s.status }}</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="mt-4 text-right">
+      <a href="{% url 'surat_list' %}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Lihat Semua</a>
+    </div>
+  </div>
+
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-1 gap-6 mb-2">
+  <!-- Status -->
+  <div class="bg-white rounded-lg shadow p-6 mb-6">
+    <h2 class="text-lg font-semibold mb-4 text-center">Status Surat</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Surat Selesai -->
+      <div class="flex items-center justify-center p-3 bg-green-100 rounded-lg">
+        <div class="w-12 h-12 flex items-center justify-center bg-green-500 text-white rounded-full">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M5 13l4 4L19 7"/>
+          </svg>
+        </div>
+        <div class="ml-4">
+          <p class="text-sm text-gray-600">Surat Selesai</p>
+          <p class="text-xl font-bold text-green-700">{{ surat_selesai }} Surat</p>
+        </div>
+      </div>
+
+      <!-- Surat Proses -->
+      <div class="flex items-center justify-center p-3 bg-yellow-100 rounded-lg">
+        <div class="w-12 h-12 flex items-center justify-center bg-yellow-500 text-white rounded-full">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 8v4l3 3"/>
+          </svg>
+        </div>
+        <div class="ml-4">
+          <p class="text-sm text-gray-600">Surat Proses</p>
+          <p class="text-xl font-bold text-yellow-700">{{ surat_proses }} Surat</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-2">
+  <!-- Grafik Surat Mingguan -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-lg font-semibold mb-4">Grafik Surat Mingguan</h2>
+    <canvas id="grafikMinggu"></canvas>
+  </div>
+
+  <!-- Grafik Surat Harian -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-lg font-semibold mb-4">Grafik Surat Harian</h2>
+    <canvas id="grafikHari"></canvas>
+  </div>
+</div>
+
+{% endblock %}

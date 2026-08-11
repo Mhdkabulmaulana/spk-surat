@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="bg-white shadow-lg rounded-lg p-6">
+        
+    <div class="flex justify-between space-x-2 mb-4">
+    <h2 class="text-2xl font-bold text-yellow-700">Beri Nilai</h2>
+    </div>
+
+    <div class="bg-white shadow rounded p-6 space-y-4">
+
+        <a href="{% url 'sifat_index' %}" class="bg-yellow-500 text-white px-2 py-2 rounded hover:bg-yellow-600">Kembali</a>
+
+         <form method="post">
+                {% csrf_token %}
+                <div class="mb-3 justify-center items-center text-center">
+                    <label for="id_surat" class="form-label">Surat</label>
+                    {{ form.surat }}
+                </div>
+                <div class="mb-3 justify-center items-center text-center">
+                    <label for="id_kriteria" class="form-label">Kriteria</label>
+                    {{ form.kriteria }}
+                </div>
+                <div class="mb-3 justify-center items-center text-center">
+                    <label for="id_nilai" class="form-label">Nilai</label>
+                    {{ form.nilai }}
+                </div>
+                
+                <div class="flex justify-center space-x-6">
+                  <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Simpan</button>
+                </div>
+
+            </form>
+    </div>
+</div>
+
+{% endblock %}

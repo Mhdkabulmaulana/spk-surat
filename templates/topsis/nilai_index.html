@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="bg-white shadow rounded p-6">
+  <h1 class="text-xl font-bold">Data Nilai</h1>
+  <!-- <a href="{% url 'nilai_tambah' %}" class="bg-blue-500 text-white px-4 py-2 rounded">Tambah Nilai</a> -->
+
+  <div class="flex justify-end space-x-2">
+    <a href="{% url 'proses_topsis' %}" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">🔄 PROSES</a>
+  </div>
+  <table class="w-full border border-gray-500 border-collapse mt-4">
+    <thead class="bg-green-600 text-white">
+      <tr>
+        <th class="text-center py-2 px-4">#</th>
+        <th class="text-center py-2 px-4">Surat</th>
+        <th class="text-center py-2 px-4">Kriteria</th>
+        <th class="text-center py-2 px-4">Nilai</th>
+        <!-- <th class="text-center py-2 px-4">Aksi</th> -->
+      </tr>
+    </thead>
+    <tbody>
+      {% for n in page_obj %}
+      <tr>
+        <td class="text-center py-2 px-4">{{ forloop.counter0|add:page_obj.start_index }}</td>
+        <td class="text-center py-2 px-4">{{ n.surat }}</td>
+        <td class="text-center py-2 px-4">{{ n.kriteria }}</td>
+        <td class="text-center py-2 px-4">{{ n.nilai }}</td>
+        <!-- <td class="text-center py-2 px-4">
+          <a href="{% url 'nilai_edit' n.id %}" class="bg-yellow-500 text-white px-2 py-1 rounded">Edit</a>
+          <a href="{% url 'nilai_hapus' n.id %}" class="bg-red-500 text-white px-2 py-1 rounded">Hapus</a>
+        </td> -->
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <!-- Navigasi pagination -->
+  <div class="flex justify-center mt-4">
+  <nav class="inline-flex space-x-1">
+    {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}"
+         class="px-3 py-1 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100">
+        Previous
+      </a>
+    {% else %}
+      <span class="px-3 py-1 rounded-md border border-gray-300 bg-gray-200 text-gray-400 cursor-not-allowed">
+        Previous
+      </span>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+      {% if page_obj.number == num %}
+        <span class="px-3 py-1 rounded-md border border-green-500 bg-green-500 text-white">
+          {{ num }}
+        </span>
+      {% else %}
+        <a href="?page={{ num }}"
+           class="px-3 py-1 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100">
+          {{ num }}
+        </a>
+      {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}"
+         class="px-3 py-1 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100">
+        Next
+      </a>
+    {% else %}
+      <span class="px-3 py-1 rounded-md border border-gray-300 bg-gray-200 text-gray-400 cursor-not-allowed">
+        Next
+      </span>
+    {% endif %}
+  </nav>
+</div>
+
+</div>
+{% endblock %}

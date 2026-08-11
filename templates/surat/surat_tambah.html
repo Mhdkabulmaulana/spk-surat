@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="bg-white shadow-lg rounded-lg p-6">
+        
+    <div class="flex justify-between space-x-2 mb-4">
+    <h2 class="text-2xl font-bold text-black">Tambah Surat</h2>
+  </div>
+    {% if pesan %}
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded">
+        {{ pesan }}
+    </div>
+    {% endif %}
+    {% if messages %}
+    <div class="alert alert-info" role="alert">
+        <strong>ℹ️ Informasi:</strong> 
+        Surat yang disimpan akan otomatis diproses dengan algoritma TOPSIS. 
+        Nilai dan ranking akan langsung muncul di halaman <strong>"Tingkat Urgensi"</strong>.
+    </div>
+    {% endif %}
+        
+    <div class="bg-white shadow rounded p-6">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <!-- Grid 2 kolom -->
+    <div class="grid grid-cols-2 gap-6">
+      <!-- Nomor Surat -->
+      <div>
+        <label for="no_surat" class="block font-semibold mb-2">Nomor Surat</label>
+        <input type="text" id="no_surat" name="no_surat" 
+               class="border rounded p-2 w-full" placeholder="Masukkan Nomor Surat">
+      </div>
+
+      <!-- Tanggal Surat -->
+      <div>
+        <label for="tanggal_surat" class="block font-semibold mb-2">Tanggal Surat</label>
+        <input type="date" id="tanggal_surat" name="tanggal_surat" 
+               class="border rounded p-2 w-full" required>
+      </div>
+
+      <!-- Pengirim -->
+      <div>
+        <label for="pengirim" class="block font-semibold mb-2">Pengirim</label>
+        <select id="pengirim" name="pengirim" class="select2 border rounded p-2 w-full">
+          {% for s in pengirim_list %}
+            <option value="{{ s.id }}">{{ s.nama }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Perihal -->
+      <div>
+        <label for="perihal" class="block font-semibold mb-2">Perihal</label>
+        <select id="perihal" name="perihal" class="select2 border rounded p-2 w-full">
+          {% for option in perihal_list %}
+            <option value="{{ option.id }}">{{ option.hal }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      
+      <!-- Status -->
+      <div>
+        <label for="status" class="block font-semibold mb-2">Status</label>
+        <select id="status" name="status" class="select2 border rounded p-2 w-full">
+          {% for s in status_list %}
+          <option value="{{ s.id }}">{{ s.nama }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      
+      <!-- Sumber Surat -->
+      <div>
+        <label for="sumber_surat" class="block font-semibold mb-2">Sumber Surat</label>
+        <select id="sumber_surat" name="sumber_surat" class="select2 border rounded p-2 w-full">
+          {% for sumber_surat in sumbersurat_list %} 
+          <option value="{{ sumber_surat.id }}">{{ sumber_surat.nama }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      
+      <!-- Sifat (kanan) -->
+      <div>
+        <label for="sifat" class="block font-semibold mb-2">Sifat</label>
+        <select id="sifat" name="sifat" class="select2 border rounded p-2 w-full">
+          {% for sifat in sifat_list %}
+          <option value="{{ sifat.id }}">{{ sifat.nama }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Keterangan -->
+      <div>
+        <label for="keterangan" class="block font-semibold mb-2">Keterangan</label>
+        <input type="text" id="keterangan" name="keterangan" 
+               class="border rounded p-2 w-full" placeholder="Masukkan keterangan">
+      </div>
+
+    </div>
+
+     <!-- Upload File -->
+    <div class="justify-center">
+      <label for="file" class="block font-semibold mb-2">Upload File</label>
+      <input type="file" id="file" name="file" class="border rounded p-2 w-1/2">
+    </div>
+
+    <!-- Tombol Simpan -->
+    <div class="flex justify-center space-x-2 mt-4">
+      <a href="{% url 'surat_list' %}" class="bg-yellow-500 hover:bg-yellow-600 px-4 py-2 text-white rounded">Kembali</a>
+      <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Simpan</button>
+    </div>
+  </form>
+</div>
+
+</div>
+
+{% endblock %}

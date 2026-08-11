@@ -1,0 +1,87 @@
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #cb9c11 0%, #fc9025 100%);
+      font-family: Arial, sans-serif;
+    }
+
+    .glass-card {
+      display: flex;
+      width: 800px;
+      height: 500px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+
+    .left-side {
+      flex: 1;
+      background: url("{% static 'img/login.jpg' %}") no-repeat center center;
+      background-size: cover;
+    }
+
+    .right-side {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+      color: #fff;
+    }
+
+    .right-side h2 {
+      margin-bottom: 20px;
+    }
+
+    .right-side form {
+      width: 100%;
+    }
+
+    .right-side input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    .right-side button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #faefce, #c69463);
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .title {
+      display: flex;
+      flex-direction: column;
+      align-items: center;   /* horizontal center */
+      justify-content: center; /* vertical center */
+      text-align: center;    /* pastikan teks rata tengah */
+      margin: 0;
+      padding: 0;
+    }
+
+    .title h1, 
+    .title h2 {
+      margin: 0;             /* hilangkan margin bawaan */
+      line-height: 1.1;      /* rapatkan baris */
+    }
+
+    .right-side button:hover {
+      opacity: 0.9;
+    }

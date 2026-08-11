@@ -1,0 +1,260 @@
+{% load group_filters %}
+{% load static %}
+{% load disposisi_filters %}
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+  <style>[x-cloak] { display: none !important; }</style>
+</head>
+<body class="bg-yellow-50 font-sans">
+  <div class="flex min-h-screen">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-green-600 text-white flex flex-col justify-between">
+      <div class="h-25 flex items-center justify-center text-xl pt-4">
+          <img src="{% static 'img/pemprovsu.png' %}" alt="Logo" class="h-20 w-auto object-contain">
+      </div>
+
+      <div class="h-20 flex items-center justify-center text-center px-2 text-xl font-bold border-b border-white">SIDIRAT</div>
+        
+      <nav class="flex-1 p-4 space-y-2">
+          <a href="{% url 'beranda' %}" class="block py-2 px-4 hover:bg-white rounded hover:text-yellow-700 font-semibold">BERANDA</a>
+          <hr>
+          <a href="{% url 'surat_list' %}" class="block py-2 px-4 hover:bg-white rounded hover:text-yellow-700 font-semibold">MANAGEMEN SURAT</a>
+          
+          <hr>
+          <a href="{% url 'hasil' %}" class="block py-2 px-4 hover:bg-white rounded hover:text-yellow-700 font-semibold">
+          TINGKAT URGENSI
+          {% if is_user_kabid and pending_disposisi_count > 0 %}
+          <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full ml-2">
+          {{ pending_disposisi_count }}
+          </span>
+          {% endif %}
+          </a>
+        
+          <hr>
+          <a href="{% url 'disposisi_index' %}" class="block py-2 px-4 hover:bg-white rounded hover:text-yellow-700 font-semibold">DISPOSISI</a>
+          {% if user.is_superuser %}
+          <hr>
+          <div x-data="{ open: false }" class="px-2 py-2">
+            <!-- <p class="px-2 py-2 font-semibold text-xs">Konfigurasi</p> -->
+            <button @click="open = !open" class="w-full flex justify-between items-center py-3 px-2 rounded">
+              <span class="font-semibold">MASTER DATA</span>
+              <svg :class="{'rotate-180': open}" class="w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div x-show="open" x-transition class="mt-2 space-y-2 pl-6">
+              <a href="{% url 'perihal_index' %}" class="block py-2 px-4 hover:bg-white rounded hover:text-yellow-700">PERIHAL</a>
+              <a href="{% url 'status_index' %}" class="block py-2 px-4 hover:bg-white rounded hover:text-yellow-700">STATUS</a>
+              <a href="{% url 'kriteria_index' %}" class="block py-2 px-4 hover:bg-white rounded hover:text-yellow-700">KRITERIA</a>
+              <a href="{% url 'sifat_index' %}" class="block py-2 px-4 hover:bg-white rounded hover:text-yellow-700">SIFAT</a>
+              <a href="{% url 'sumbersurat_index' %}" class="block py-2 px-4 hover:bg-white rounded hover:text-yellow-700">SUMBER SURAT</a>
+              <a href="{% url 'pengirim_index' %}" class="block py-2 px-4 hover:bg-white rounded hover:text-yellow-700">PENGIRIM</a>
+            </div>
+          </div>
+          {% endif %}
+        </nav>
+    </aside>
+
+    <div class="flex flex-col flex-1">
+      <nav class="w-full bg-green-600 p-2 flex justify-between items-center border-b border-yellow-300">
+  <!-- Logo / Judul -->
+  <div>
+    <h1 class="text-xl font-bold text-white"></h1>
+  </div>
+
+  <!-- Bagian kanan: sambutan + logout -->
+  <div class="flex items-center space-x-4">
+    <span class="text-white font-semibold text-2xl">
+      Selamat Datang -- {{ user.username }}
+    </span>
+    <form action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+      <button type="submit" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded">
+        LOGOUT
+      </button>
+    </form>
+  </div>
+</nav>
+
+
+      <!-- Main Content -->
+      <main class="flex-1 p-8">
+      {% block content %}
+      <!-- Konten halaman akan masuk di sini -->
+      {% endblock %}
+      </main>
+    <!-- Footer -->
+    <footer class="bg-green-600 text-white py-4">
+    <div class="container mx-auto flex flex-col md:flex-row justify-center items-center px-6">
+      <p class="text-sm">&copy; 2026 SISTEM DISPOSISI SURAT</p>
+    </div>
+    </footer>
+    </div>
+  </div> 
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const preferensiData = {{ preferensi_data|safe }};
+  const labels = preferensiData.map(item => item.surat__no_surat);
+  const values = preferensiData.map(item => item.preferensi);
+
+  new Chart(document.getElementById('chartPreferensi'), {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Nilai Preferensi',
+        data: values,
+        backgroundColor: 'rgba(75, 192, 192, 0.6)'
+      }]
+    },
+    options: {
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          min: 0,
+          max: 1,
+          ticks: { stepSize: 0.2 }
+        }
+      }
+    }
+  });
+</script>
+
+<script src="{% static 'js/script.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <script>
+    const ctx = document.getElementById('disposisihart').getContext('2d');
+    const disposisihart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: ['Disposisi'],
+        datasets: [{
+          label: 'Disposisi',
+          data: [{{ disposisi }}],
+          backgroundColor: [
+            'rgba(26, 117, 255)'    // kuning
+          ],
+          borderColor: [
+            'rgba(255, 255, 255)',
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }
+    });
+  </script>
+
+{% if messages %}
+<div x-data="{ show: true }">
+  <!-- Background blur -->
+  <div x-show="show" x-transition class="fixed inset-0 bg-black bg-opacity-40 z-40"></div>
+
+  <!-- Popup -->
+  <div x-show="show"
+       x-transition
+       x-init="setTimeout(() => show = false, 2000)"
+       class="fixed inset-0 flex items-center justify-center z-50">
+    <div class="flex flex-col items-center space-y-3">
+
+      {% for message in messages %}
+        <!-- Kotak putih kaca -->
+        <div class="flex flex-col items-center space-y-2 
+                    bg-white border border-gray-300 
+            rounded-xl px-6 py-4 shadow-xl">
+          
+          {% if message.tags == "success" %}
+            <!-- Icon hijau -->
+            <div class="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center shadow">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                      d="M5 13l4 4L19 7"/>
+              </svg>
+            </div>
+          {% elif message.tags == "error" %}
+            <!-- Icon merah -->
+            <div class="w-12 h-12 rounded-full bg-red-500 flex items-center justify-center shadow">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                      d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </div>
+          {% endif %}
+
+          <!-- Pesan -->
+          <div class="text-base font-semibold text-gray-900">
+            {{ message }}
+          </div>
+        </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Mingguan
+  new Chart(document.getElementById('grafikMinggu').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ['Minggu 1','Minggu 2','Minggu 3','Minggu 4'],
+      datasets: [
+        { label:'Surat Masuk', data: {{ data_surat_minggu|safe }}, backgroundColor:'rgba(54,162,235,0.6)' },
+        { label:'Surat Proses', data: {{ data_proses_minggu|safe }}, backgroundColor:'rgba(255,206,86,0.6)' },
+        { label:'Surat Selesai', data: {{ data_selesai_minggu|safe }}, backgroundColor:'rgba(75,192,192,0.6)' },
+        { label:'Sudah Disposisi', data: {{ data_sudah_disposisi_minggu|safe }}, backgroundColor:'rgba(153,102,255,0.6)' },
+        { label:'Belum Disposisi', data: {{ data_belum_disposisi_minggu|safe }}, backgroundColor:'rgba(255,99,132,0.6)' }
+      ]
+    },
+    options: { responsive:true, scales:{ y:{ beginAtZero:true } } }
+  });
+
+  // Harian
+  new Chart(document.getElementById('grafikHari').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: ['Sen','Sel','Rab','Kam','Jum','Sab','Min'],
+      datasets: [
+        { label:'Surat Masuk', data: {{ data_surat_hari|safe }}, borderColor:'rgba(54,162,235,1)', fill:false, tension:0.3 },
+        { label:'Surat Proses', data: {{ data_proses_hari|safe }}, borderColor:'rgba(255,206,86,1)', fill:false, tension:0.3 },
+        { label:'Surat Selesai', data: {{ data_selesai_hari|safe }}, borderColor:'rgba(75,192,192,1)', fill:false, tension:0.3 }
+      ]
+    },
+    options: { responsive:true, scales:{ y:{ beginAtZero:true } } }
+  });
+});
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('.select2').select2({
+      placeholder: "Cari pengirim...",
+      allowClear: true,
+    });
+  });
+</script>
+
+
+</body>
+</html>

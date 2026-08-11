@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="bg-white shadow-lg rounded-lg p-6">
+        
+    <div class="flex justify-between space-x-2 mb-4">
+    <h2 class="text-2xl font-bold text-black">Tambah Status</h2>
+    </div>
+
+        <div class="bg-white shadow rounded p-6 space-y-4">
+            <form method="post" enctype="multipart/form-data" class="space-y-4">
+                {% csrf_token %}
+
+                <div>
+                    <label for="nama" class="block font-semibold mb-2">Nama Status</label>
+                    <input type="text" id="nama" name="nama" class="border rounded p-2 w-full" placeholder="Masukkan Nama Status">
+                </div>
+
+                <!-- Tombol Simpan -->
+                <div class="flex justify-center space-x-2 mt-4">
+                    <a href="{% url 'status_index' %}" class="bg-yellow-500 hover:bg-yellow-600 px-4 py-2 text-white rounded">Kembali</a>
+                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Simpan</button>
+                </div>
+            </form>
+        </div>
+
+</div>
+
+{% endblock %}

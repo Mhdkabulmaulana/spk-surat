@@ -1,0 +1,56 @@
+<html>
+<head>
+<style>
+    @page {
+        size: A4 landscape;
+        margin: 1cm;
+    }
+    h2 {
+        text-align: center;
+        margin-bottom: 4px;
+        font-size: xxx-large;
+    }
+    .info {
+        text-align: left;
+        font-size: x-large;
+        margin-bottom: 12px;
+        color: #555;
+    }
+</style>
+</head>
+<body>
+    <h2>Rekapan Surat Masuk</h2>
+    <div class="info">
+        Dicetak pada: {{ dicetak }}
+    </div>
+
+    <table style="width:100%; border:1px solid #7d7171; border-collapse:collapse; font-size:12px;">
+      <tr style="background-color:#cfcfcf;">
+        <th style="padding:6px; text-align:center; width:5%;">#</th>
+        <th style="padding:6px; text-align:center;">No Surat</th>
+        <th style="padding:6px; text-align:center;">Tanggal Surat</th>
+        <th style="padding:6px; text-align:center;">Tanggal Masuk</th>
+        <th style="padding:6px; text-align:center;">Perihal</th>
+        <th style="padding:6px; text-align:center;">Pengirim</th>
+        <th style="padding:6px; text-align:center;">Sumber</th>
+        <th style="padding:6px; text-align:center;">Keterangan</th>
+        <th style="padding:6px; text-align:center;">Disposisi</th>
+      </tr>
+      {% for surat in surat_qs %}
+      <tr>
+        <td style="padding:6px; text-align:center;">{{ forloop.counter }}</td>
+        <td style="padding:6px; text-align:center;">{{ surat.no_surat }}</td>
+        <td style="padding:6px; text-align:center;">{{ surat.tanggal_surat }}</td>
+        <td style="padding:6px; text-align:center;">{{ surat.tanggal }}</td>
+        <td style="padding:6px; text-align:center;">{{ surat.perihal.hal }}</td>
+        <td style="padding:6px; text-align:center;">{{ surat.pengirim.nama }}</td>
+        <td style="padding:6px; text-align:center;">{{ surat.sumber_surat.nama }}</td>
+        <td style="padding:6px; text-align:center;">{{ surat.keterangan }}</td>
+        <td style="padding:6px; text-align:center; white-space:normal; word-wrap:break-word;">
+            {{ surat.disposisi.tujuan }}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+</body>
+</html>

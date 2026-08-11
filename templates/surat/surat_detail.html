@@ -1,0 +1,62 @@
+<table class="w-full border border-gray-200 rounded-lg overflow-hidden text-xl">
+  <tbody>
+    <tr class="bg-gray-50 hover:bg-gray-100">
+      <td class="font-medium py-3 px-4 w-1/3">No Surat</td>
+      <td class="py-3 px-4">{{ surat.no_surat }}</td>
+    </tr>
+    <tr class="hover:bg-gray-50">
+      <td class="font-medium py-3 px-4">Tanggal</td>
+      <td class="py-3 px-4">{{ surat.tanggal }}</td>
+    </tr>
+    <tr class="bg-gray-50 hover:bg-gray-100">
+      <td class="font-medium py-3 px-4">Perihal</td>
+      <td class="py-3 px-4">{{ surat.perihal }}</td>
+    </tr>
+    <tr class="hover:bg-gray-50">
+      <td class="font-medium py-3 px-4">Pengirim</td>
+      <td class="py-3 px-4">{{ surat.pengirim }}</td>
+    </tr>
+    <tr class="bg-gray-50 hover:bg-gray-100">
+      <td class="font-medium py-3 px-4">Keterangan</td>
+      <td class="py-3 px-4">{{ surat.keterangan }}</td>
+    </tr>
+   <tr class="hover:bg-gray-50">
+  <td class="font-medium py-3 px-4">Status</td>
+  <td class="py-3 px-4">
+    {% if surat.status.nama == "Selesai" %}
+      <span class="text-green-600 font-semibold">{{ surat.status.nama }}</span>
+    {% elif surat.status.nama == "Arsip" %}
+      <span class="text-yellow-400 font-semibold">{{ surat.status.nama }}</span>
+    {% elif surat.status.nama == "Proses" %}
+      <span class="text-yellow-600 font-semibold">{{ surat.status.nama }}</span>
+    {% else %}
+      <span class="text-gray-600 font-semibold">{{ surat.status.nama }}</span>
+    {% endif %}
+  </td>
+</tr>
+    <tr class="bg-gray-50 hover:bg-gray-100">
+      <td class="font-medium py-3 px-4">Sumber Surat</td>
+      <td class="py-3 px-4">{{ surat.sumber_surat }}</td>
+    </tr>
+
+    <tr class="bg-gray-50 hover:bg-gray-100">
+      <td class="font-medium py-3 px-4">Sifat</td>
+      <td class="py-3 px-4">{{ surat.sifat }}</td>
+    </tr>
+
+    {% if surat.file %}
+    <tr class="bg-gray-50 hover:bg-gray-100">
+      <td class="font-medium py-3 px-4">File</td>
+      <td class="py-3 px-4">
+        <a href="{{ surat.file.url }}" class="text-blue-600 hover:underline">Lihat File</a>
+      </td>
+    </tr>
+    {% endif %}
+
+    <tr class="bg-gray-50 hover:bg-gray-100">
+      <td class="font-medium py-3 px-4">Disposisi</td>
+      <td class="py-3 px-4">{{ surat.disposisi.tujuan }}</td>
+    </tr>
+
+  </tbody>
+</table>

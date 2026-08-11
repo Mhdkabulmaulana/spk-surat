@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="bg-white shadow-lg rounded-lg p-6">
+        
+    <div class="flex justify-between space-x-2 mb-4">
+    <h2 class="text-2xl font-bold text-black">Tambah Kriteria</h2>
+    </div>
+
+    <div class="bg-white shadow rounded p-6 space-y-4">
+
+        <form method="post" class="mt-4">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="id_nama" class="block font-semibold">Nama Kriteria</label>
+                {{ form.nama }}
+                {{ form.nama.errors }}
+            </div>
+            <div class="mb-4">
+                <label for="id_bobot" class="block font-semibold">Bobot Kriteria</label>
+                {{ form.bobot }}
+                {{ form.bobot.errors }}
+            </div>
+            
+            <div class="flex justify-center space-x-2 mt-4">
+                <a href="{% url 'kriteria_index' %}" class="bg-yellow-500 hover:bg-yellow-600 px-4 py-2 text-white rounded">Kembali</a>
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Simpan</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}

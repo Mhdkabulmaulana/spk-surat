@@ -1,0 +1,70 @@
+<html>
+<head>
+<style>
+    @page {
+        size: A4 landscape;
+        margin: 1cm;
+    }
+    h2 {
+        text-align: center;
+        margin-bottom: 4px;
+        font-size: xxx-large;
+    }
+    .info {
+        text-align: left;
+        font-size: x-large;
+        margin-bottom: 12px;
+        color: #555;
+    }
+    table {
+        width: 100%;
+        border: 1px solid #7d7171;
+        border-collapse: collapse;
+        font-size: 12px;
+        table-layout: fixed; /* 🔹 patuh colgroup */
+    }
+    th, td {
+        border: 1px solid #7d7171;
+        padding: 6px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+    }
+    th {
+        background-color: #cfcfcf;
+    }
+    .center { text-align: center; }
+    .left { text-align: left; }
+    .catatan {
+        text-align: left;
+        min-width: 200px; /* 🔹 cegah mengecil */
+    }
+</style>
+</head>
+<body>
+    <h2>Rekapan Disposisi Surat</h2>
+    <div class="info">
+        Dicetak pada: {{ dicetak }}
+    </div>
+
+    <table style="width:100%; border:1px solid #7d7171; border-collapse:collapse; font-size:12px; table-layout:fixed;">
+  <tr style="background-color:#cfcfcf;">
+    <th style="width:5%; text-align:center;">#</th>
+    <th style="width:20%; text-align:center;">No Surat</th>
+    <th style="width:15%; text-align:center;">Tujuan</th>
+    <th style="width:20%; text-align:center;">Tanggal</th>
+    <th style="width:40%; text-align:left;">Catatan</th>
+  </tr>
+  {% for d in dispo %}
+  <tr>
+    <td style="width:5%; text-align:center;">{{ forloop.counter }}</td>
+    <td style="width:20%; text-align:center;">{{ d.surat.no_surat }}</td>
+    <td style="width:15%; text-align:center;">{{ d.tujuan }}</td>
+    <td style="width:20%; text-align:center;">{{ d.tanggal }}</td>
+    <td style="width:40%; text-align:left; word-wrap:break-word; white-space:normal;">{{ d.catatan }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+</body>
+</html>

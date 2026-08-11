@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; font-size: 12px; }
+    .header { text-align: center; font-weight: bold; margin-bottom: 10px; }
+    table { width: 100%; border-collapse: collapse; }
+    td { padding: 4px; vertical-align: top; }
+    .checkbox { font-family: DejaVu Sans, sans-serif; } /* untuk simbol ceklis */
+    .box { border: 1px solid #000; padding: 8px; margin-bottom: 10px; }
+    .filled { background:#000; }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+    <div class="header">
+  <table style="width:100%; border-collapse:collapse;">
+    <tr>
+      <td style="width:80px; text-align:center;">
+        <img src="{{ logo_url }}" alt="Logo" style="height:100px;">
+      </td>
+      <td style="text-align:center; font-weight:bold; font-size:14px;">
+        PEMERINTAH PROVINSI SUMATERA UTARA<br>
+        BADAN KEUANGAN DAN ASET DAERAH<br>
+        Jalan Imam Bonjol No. 61 Medan, Sumatera Utara 20157
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+  <!-- Kotak utama -->
+  <div class="box">
+    <table border="1" style="width:100%; border-collapse:collapse;">
+      <tr>
+        <td colspan="2" style="text-align:center; font-weight:bold; padding:6px;">
+            <h3 style="text-align:center;">LEMBAR DISPOSISI</h3>
+        </td>
+      </tr>
+      <tr>
+        <td>
+            <p><strong>Surat Dari :</strong> {{ surat.pengirim }}</p>
+            <br>
+            <p><strong>No. Surat :</strong> {{ surat.no_surat }}</p>
+        </td>
+        <td>
+            <p><strong>Tgl. Surat :</strong> {{ surat.tanggal_surat|date:"d F Y" }}</p>
+            <br>
+            <p><strong>Diterima Tgl.</strong> {{ disposisi.tanggal|date:"d F Y" }}</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+            <p><strong>Perihal :</strong> {{ surat.perihal }}</p>
+            <br>
+            <br>
+        </td>
+      </tr>
+      <tr>
+        <td>
+            <!-- Tujuan -->
+            <p><strong>Tujuan</strong></p>
+            <p class="checkbox">
+            ☐ Kabid Akuntansi dan Pelaporan Keuangan Daerah<br>
+            ☐ Kepala Sub Bidang Akuntansi I<br>
+            ☐ Kepala Sub Bidang Akuntansi II<br>
+            ☐ Jabatan Fungsional / Kepala Sub Bidang Akuntansi III<br>
+            ☐ Staf<br>
+            ☐ Arsip
+            </p>
+        </td>
+        <td>
+            <p><strong>Sifat</strong>
+                <p>
+                ☐<span class="box {% if surat.sifat == 'Sangat Segera' %}filled{% endif %}"></span> Sangat Segera<br>
+                ☐<span class="box {% if surat.sifat == 'Segera' %}filled{% endif %}"></span> Segera<br>
+                ☐<span class="box {% if surat.sifat == 'Rahasia' %}filled{% endif %}"></span> Rahasia
+                </p>
+            </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+            <!-- Catatan di luar kotak -->
+            <p><strong>Catatan :</strong><br>{{ disposisi.catatan }}</p>
+        </td>
+        <td>
+            <!-- Tanda tangan -->
+            <p style="margin-top:40px;" class="checkbox">
+                KEPALA BADAN KEUANGAN DAN ASET DAERAH<br><br>
+                <br>
+                <br>
+                <br>
+                H. TIMUR TUMANGGOR, S.Sos., M.AP<br>
+                PEMBINA UTAMA MADYA<br>
+                NIP. 19731211 199303 1 005
+            </p>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+</body>
+</html>

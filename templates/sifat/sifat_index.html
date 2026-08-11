@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="bg-white shadow-lg rounded-lg p-6">
+  <div class="flex justify-between space-x-2 mb-4">
+    <h2 class="text-2xl font-bold text-black">Data Sifat</h2>
+  </div>
+
+    <div class="flex justify-between space-x-2 mb-4">
+        <a href="{% url 'sifat_tambah' %}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Tambah Data</a>
+    </div> 
+
+    <table class="w-full border border-gray-500 border-collapse">
+        <thead>
+        <tr class="bg-green-600 text-white">
+            <th class="py-2 px-4 text-center">#</th>
+            <th class="py-2 px-4 text-center">Sifat</th>
+            <th class="py-2 px-4 text-center">Aksi</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for sifat in page_obj %}
+            <tr>
+                <td class="text-center py-2 px-4">{{ forloop.counter }}</td>
+                <td class="text-center py-2 px-4">{{ sifat.nama }}</td>
+                <td class="text-center py-4 px-4">
+                  <div x-data="{ open: false }" class="relative inline-block text-left">
+                  <!-- Tombol utama -->
+                  <button @click="open = !open"
+                          class="bg-gray-500 hover:bg-gray-600 text-white py-1 px-3 rounded inline-flex items-center">
+                    Aksi
+                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 9l-7 7-7-7"/>
+                    </svg>
+                  </button>
+                    <!-- Dropdown menu -->
+                    <div x-show="open" @click.away="open = false"
+                        class="absolute right-0 mt-2 w-36 bg-white border border-gray-200 rounded shadow-lg z-10">
+                        <a href="{% url 'sifat_edit' pk=sifat.id %}"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</a>
+                        <a href="{% url 'sifat_hapus' pk=sifat.id %}"
+                        onclick="return confirm('Yakin mau hapus?')"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Hapus</a>
+                  </div>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="4" class="text-center py-4">Belum ada data Sifat</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Navigasi pagination -->
+<div class="flex justify-center mt-4">
+  <nav class="inline-flex space-x-1">
+    {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}"
+         class="px-3 py-1 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100">
+        Previous
+      </a>
+    {% else %}
+      <span class="px-3 py-1 rounded-md border border-gray-300 bg-gray-200 text-gray-400 cursor-not-allowed">
+        Previous
+      </span>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+      {% if page_obj.number == num %}
+        <span class="px-3 py-1 rounded-md border border-green-500 bg-green-500 text-white">
+          {{ num }}
+        </span>
+      {% else %}
+        <a href="?page={{ num }}"
+           class="px-3 py-1 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100">
+          {{ num }}
+        </a>
+      {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}"
+         class="px-3 py-1 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100">
+        Next
+      </a>
+    {% else %}
+      <span class="px-3 py-1 rounded-md border border-gray-300 bg-gray-200 text-gray-400 cursor-not-allowed">
+        Next
+      </span>
+    {% endif %}
+  </nav>
+</div>
+
+</div>
+
+{% endblock %}

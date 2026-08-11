@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0f4e19 0%, #224928 100%);
+      font-family: Arial, sans-serif;
+    }
+
+    .glass-card {
+      display: flex;
+      width: 800px;
+      height: 500px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+
+    .left-side {
+      flex: 1;
+      background: url("{% static 'img/login.PNG' %}") no-repeat center center;
+      background-size: cover;
+    }
+
+    .right-side {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+      color: #fff;
+    }
+
+    .right-side h2 {
+      margin-bottom: 20px;
+    }
+
+    .right-side form {
+      width: 100%;
+    }
+
+    .right-side input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    .right-side button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #7dcf57, #368e40);
+      color: #ffffff;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .title {
+      display: flex;
+      flex-direction: column;
+      align-items: center;   /* horizontal center */
+      justify-content: center; /* vertical center */
+      text-align: center;    /* pastikan teks rata tengah */
+      margin: 0;
+      padding: 0;
+    }
+
+    .title h1, 
+    .title h2 {
+      margin: 0;             /* hilangkan margin bawaan */
+      line-height: 1.1;      /* rapatkan baris */
+    }
+
+    .right-side button:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <div class="glass-card">
+    <div class="left-side"></div>
+    <div class="right-side">
+      <!-- <div class="flex items-center justify-center">
+          <img src="{% static 'img/pemprovsu.png' %}" alt="Logo" class="object-contain">
+      </div> -->
+      <h1 class="mb-2 text-3xl text-bold font-extrabold">SIDIRAT</h1>
+      <h1 class="mb-4 text-xl font-semibold">SILAHKAN LOGIN</h3>
+      <form method="post">
+        {% csrf_token %}
+        <label for="username">Username</label>
+        <input type="text" name="username" class="w-full px-3 py-2 border rounded text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Username">
+
+        <label for="password">Password</label>
+        <input type="password" name="password" class="w-full px-3 py-2 border rounded text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Password">
+
+        <button type="submit">LOGIN</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

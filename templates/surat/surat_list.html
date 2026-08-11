@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+{% load group_filters %}
+{% load static %}
+{% block content %}
+<div class="bg-white shadow-lg rounded-lg p-6">
+  <div class="flex justify-between space-x-2 mb-4">
+    <h2 class="text-2xl font-bold text-black-700">MANAJEMEN SURAT</h2>
+  </div>
+
+<div class="mb-2 flex space-x-4 justify-end" x-data="{ openFilter: false, selectedFilter: '' }">
+  <form method="get" class="flex space-x-2 items-center">
+    <input type="text" name="q" value="{{ query|default:'' }}" 
+           placeholder="Cari surat..." 
+           class="border rounded p-2 w-64">
+
+    <!-- Tombol filter -->
+    <div class="relative">
+      <button type="button" @click="openFilter = !openFilter"
+              class="bg-gray-500 text-white px-3 py-2 rounded inline-flex items-center">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2l-7 7v5l-4 2v-7L3 6V4z"/>
+        </svg>
+        Filter
+      </button>
+
+      <!-- Dropdown pilih kategori filter -->
+      <div x-show="openFilter" @click.away="openFilter = false" class="absolute left-0 top-full mt-2 bg-white border rounded shadow-lg z-10 inline-block min-w-max">
+        <button type="button" @click="selectedFilter = 'status'; openFilter=false"
+                class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Status</button>
+        <button type="button" @click="selectedFilter = 'perihal'; openFilter=false"
+                class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Perihal</button>
+        <button type="button" @click="selectedFilter = 'sifat'; openFilter=false"
+                class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Sifat</button>
+        <button type="button" @click="selectedFilter = 'disposisi'; openFilter=false"
+                class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Disposisi</button>
+      </div>
+    </div>
+
+    <!-- Dropdown kedua sesuai pilihan -->
+    <template x-if="selectedFilter === 'status'">
+      <select name="status" class="border rounded p-2">
+        <option value="">-- Semua Status --</option>
+        {% for s in status_list %}
+          <option value="{{ s.id }}">{{ s.nama }}</option>
+        {% endfor %}
+      </select>
+    </template>
+
+    <template x-if="selectedFilter === 'perihal'">
+      <select name="perihal" class="border rounded p-2">
+        <option value="">-- Semua Perihal --</option>
+        {% for p in perihal_list %}
+          <option value="{{ p.id }}">{{ p.hal }}</option>
+        {% endfor %}
+      </select>
+    </template>
+
+    <template x-if="selectedFilter === 'sifat'">
+      <select name="sifat" class="border rounded p-2">
+        <option value="">-- Semua Sifat --</option>
+        {% for sf in sifat_list %}
+          <option value="{{ sf.id }}">{{ sf.nama }}</option>
+        {% endfor %}
+      </select>
+    </template>
+
+    <template x-if="selectedFilter === 'disposisi'">
+      <select name="disposisi" class="border rounded p-2">
+        <option value="">-- Semua Disposisi --</option>
+        {% for d in disposisi_list %}
+          <option value="{{ d }}">{{ d }}</option>
+        {% endfor %}
+      </select>
+    </template>
+
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+      Search
+    </button>
+  </form>
+</div>
+
+    {% if user|in_groups:"Superadmin,Admin" %}
+    <div class="flex justify-between space-x-2">
+        <a href="{% url 'surat_tambah' %}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Tambah Data</a>
+    </div> 
+    {% endif %}
+
+    <div class="flex justify-end space-x-2 mb-4">
+        <a href="{% url 'export_pdf' %}" class="bg-red-600 hover:bg-red-400 text-white px-4 py-2 rounded">Export PDF</a>
+        <a href="{% url 'disposisi_index' %}" class="bg-purple-600 hover:bg-purple-400 text-white px-4 py-2 rounded">Lihat Disposisi</a>
+      </div> 
+
+    <table class="w-full border border-gray-500 border-collapse">
+        <thead>
+        <tr class="bg-green-600 text-white">
+            <th class="py-2 px-4 text-center">#</th>
+            <th class="py-2 px-4 text-center">No Surat</th>
+            <th class="py-2 px-4 text-center">Tanggal Surat</th>
+            <th class="py-2 px-4 text-center">Tanggal Masuk</th>
+            <th class="py-2 px-4 text-center">Pengirim</th>
+            <th class="py-2 px-4 text-center">Sumber</th>
+            <th class="py-2 px-4 text-center">Perihal</th>
+            <th class="py-2 px-4 text-center">Disposisi</th>
+            {% if user|in_groups:"Superadmin,Admin" %}
+            <th class="py-2 px-4 text-center">Aksi</th>
+            {% endif %}
+        </tr>
+        </thead>
+        <tbody>
+            {% for s in page_obj %}
+            <tr>
+                <td class="text-center py-2 px-4">{{ forloop.counter0|add:page_obj.start_index }}</td>
+                <td class="text-center py-2 px-4">{{ s.no_surat }}</td>
+                <td class="text-center py-2 px-4">{{ s.tanggal_surat }}</td>
+                <td class="text-center py-2 px-4">{{ s.tanggal }}</td>
+                <td class="text-center py-2 px-4">{{ s.pengirim }}</td>
+                <td class="text-center py-2 px-4">{{ s.sumber_surat }}</td>
+                <td class="text-center py-2 px-4">{{ s.perihal }}</td>
+                <td class="text-center py-2 px-4">{{ s.disposisi.tujuan }}</td>
+                {% if user|in_groups:"Superadmin,Admin" %}
+                <td class="text-center py-4 px-4">
+  <div x-data="{ open: false }" class="relative inline-block text-left">
+    <!-- Tombol utama -->
+    <button @click="open = !open"
+            class="bg-gray-500 hover:bg-gray-600 text-white py-1 px-3 rounded inline-flex items-center">
+      Aksi
+      <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M19 9l-7 7-7-7"/>
+      </svg>
+    </button>
+
+    <!-- Dropdown menu -->
+    <div x-show="open" @click.away="open = false"
+         class="absolute right-0 mt-2 w-36 bg-white border border-gray-200 rounded shadow-lg z-10">
+      <a href="#" onclick="openDetailModal({{ s.id }})"
+         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Lihat</a>
+      <a href="{% url 'surat_edit' pk=s.id %}"
+         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</a>
+      <a href="{% url 'surat_hapus' pk=s.id %}"
+         onclick="return confirm('Yakin mau hapus?')"
+         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Hapus</a>
+    </div>
+  </div>
+</td>
+{% endif %}
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% include 'surat/modal.html' %}
+
+<!-- Navigasi pagination -->
+<div class="flex justify-center mt-4">
+  <nav class="inline-flex space-x-1">
+    {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}"
+         class="px-3 py-1 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100">
+        Previous
+      </a>
+    {% else %}
+      <span class="px-3 py-1 rounded-md border border-gray-300 bg-gray-200 text-gray-400 cursor-not-allowed">
+        Previous
+      </span>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+      {% if page_obj.number == num %}
+        <span class="px-3 py-1 rounded-md border border-green-600 bg-green-600 text-white">
+          {{ num }}
+        </span>
+      {% else %}
+        <a href="?page={{ num }}"
+           class="px-3 py-1 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100">
+          {{ num }}
+        </a>
+      {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}"
+         class="px-3 py-1 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100">
+        Next
+      </a>
+    {% else %}
+      <span class="px-3 py-1 rounded-md border border-gray-300 bg-gray-200 text-gray-400 cursor-not-allowed">
+        Next
+      </span>
+    {% endif %}
+  </nav>
+</div>
+
+</div>
+
+<script>
+  function openDetailModal(id) {
+      fetch(`/surat/detail/${id}/`)
+          .then(response => response.text())
+          .then(html => {
+              document.getElementById('modalContent').innerHTML = html;
+              document.getElementById('detailModal').classList.remove('hidden');
+              document.getElementById('detailModal').classList.add('flex');
+          });
+  }
+
+  function closeDetailModal() {
+      document.getElementById('detailModal').classList.add('hidden');
+      document.getElementById('detailModal').classList.remove('flex');
+  }
+</script>
+
+{% endblock %}
