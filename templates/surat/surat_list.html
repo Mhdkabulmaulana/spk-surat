@@ -115,7 +115,13 @@
                 <td class="text-center py-2 px-4">{{ s.pengirim }}</td>
                 <td class="text-center py-2 px-4">{{ s.sumber_surat }}</td>
                 <td class="text-center py-2 px-4">{{ s.perihal }}</td>
-                <td class="text-center py-2 px-4">{{ s.disposisi.tujuan }}</td>
+                <td class="text-center py-2 px-4">
+                {% if s.disposisi %}
+                  {{ s.disposisi.tujuan|default:"Belum" }}
+                {% else %}
+                  Belum
+                {% endif %}
+                </td>
                 <td class="text-center py-4 px-4">
                     <div x-data="{ open: false }" class="relative inline-block text-left">
                     <!-- Tombol utama -->
