@@ -27,7 +27,7 @@
     <table style="width:100%; border:1px solid #7d7171; border-collapse:collapse; font-size:12px;">
       <tr style="background-color:#cfcfcf;">
         <th style="padding:6px; text-align:center; width:5%;">#</th>
-        <th style="padding:6px; text-align:center;">No Surat</th>
+        <th style="padding:12px; text-align:center;">No Surat</th>
         <th style="padding:6px; text-align:center;">Tanggal Surat</th>
         <th style="padding:6px; text-align:center;">Tanggal Masuk</th>
         <th style="padding:6px; text-align:center;">Perihal</th>
@@ -39,7 +39,7 @@
       {% for surat in surat_qs %}
       <tr>
         <td style="padding:6px; text-align:center;">{{ forloop.counter }}</td>
-        <td style="padding:6px; text-align:center;">{{ surat.no_surat }}</td>
+        <td style="padding:12px; text-align:center;">{{ surat.no_surat }}</td>
         <td style="padding:6px; text-align:center;">{{ surat.tanggal_surat }}</td>
         <td style="padding:6px; text-align:center;">{{ surat.tanggal }}</td>
         <td style="padding:6px; text-align:center;">{{ surat.perihal.hal }}</td>
