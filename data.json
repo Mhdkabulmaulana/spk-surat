@@ -1,0 +1,2079 @@
+[
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2026-05-16T10:16:55.232Z",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "2",
+    "object_repr": "Admin",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 2,
+  "fields": {
+    "action_time": "2026-05-16T10:17:18.811Z",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "3",
+    "object_repr": "Kabid",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 3,
+  "fields": {
+    "action_time": "2026-05-16T10:17:44.518Z",
+    "user": 1,
+    "content_type": 2,
+    "object_id": "1",
+    "object_repr": "Su",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 4,
+  "fields": {
+    "action_time": "2026-05-16T10:17:53.923Z",
+    "user": 1,
+    "content_type": 2,
+    "object_id": "1",
+    "object_repr": "Su",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 5,
+  "fields": {
+    "action_time": "2026-05-16T10:20:10.022Z",
+    "user": 1,
+    "content_type": 2,
+    "object_id": "2",
+    "object_repr": "Superadmin",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 6,
+  "fields": {
+    "action_time": "2026-05-16T10:22:00.255Z",
+    "user": 1,
+    "content_type": 2,
+    "object_id": "3",
+    "object_repr": "Admin",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 7,
+  "fields": {
+    "action_time": "2026-05-16T10:22:03.577Z",
+    "user": 1,
+    "content_type": 2,
+    "object_id": "2",
+    "object_repr": "Superadmin",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Permissions\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 8,
+  "fields": {
+    "action_time": "2026-05-16T10:22:27.102Z",
+    "user": 1,
+    "content_type": 2,
+    "object_id": "4",
+    "object_repr": "Kabid",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 9,
+  "fields": {
+    "action_time": "2026-05-16T10:22:37.132Z",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "1",
+    "object_repr": "Superadmin",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Groups\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 10,
+  "fields": {
+    "action_time": "2026-05-16T10:22:43.949Z",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "3",
+    "object_repr": "Kabid",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Groups\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 11,
+  "fields": {
+    "action_time": "2026-05-16T10:22:55.326Z",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "2",
+    "object_repr": "Admin",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Groups\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 12,
+  "fields": {
+    "action_time": "2026-05-16T22:53:30.472Z",
+    "user": 1,
+    "content_type": 2,
+    "object_id": "2",
+    "object_repr": "Superadmin",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Permissions\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 13,
+  "fields": {
+    "action_time": "2026-05-16T22:58:47.721Z",
+    "user": 1,
+    "content_type": 2,
+    "object_id": "3",
+    "object_repr": "Admin",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Permissions\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 14,
+  "fields": {
+    "action_time": "2026-05-16T23:00:18.465Z",
+    "user": 1,
+    "content_type": 2,
+    "object_id": "4",
+    "object_repr": "Kabid",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Permissions\"]}}]"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 1,
+  "fields": {
+    "name": "Can add log entry",
+    "content_type": 1,
+    "codename": "add_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 2,
+  "fields": {
+    "name": "Can change log entry",
+    "content_type": 1,
+    "codename": "change_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 3,
+  "fields": {
+    "name": "Can delete log entry",
+    "content_type": 1,
+    "codename": "delete_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 4,
+  "fields": {
+    "name": "Can view log entry",
+    "content_type": 1,
+    "codename": "view_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 5,
+  "fields": {
+    "name": "Can add permission",
+    "content_type": 3,
+    "codename": "add_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 6,
+  "fields": {
+    "name": "Can change permission",
+    "content_type": 3,
+    "codename": "change_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 7,
+  "fields": {
+    "name": "Can delete permission",
+    "content_type": 3,
+    "codename": "delete_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 8,
+  "fields": {
+    "name": "Can view permission",
+    "content_type": 3,
+    "codename": "view_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 9,
+  "fields": {
+    "name": "Can add group",
+    "content_type": 2,
+    "codename": "add_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 10,
+  "fields": {
+    "name": "Can change group",
+    "content_type": 2,
+    "codename": "change_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 11,
+  "fields": {
+    "name": "Can delete group",
+    "content_type": 2,
+    "codename": "delete_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 12,
+  "fields": {
+    "name": "Can view group",
+    "content_type": 2,
+    "codename": "view_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 13,
+  "fields": {
+    "name": "Can add user",
+    "content_type": 4,
+    "codename": "add_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 14,
+  "fields": {
+    "name": "Can change user",
+    "content_type": 4,
+    "codename": "change_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 15,
+  "fields": {
+    "name": "Can delete user",
+    "content_type": 4,
+    "codename": "delete_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 16,
+  "fields": {
+    "name": "Can view user",
+    "content_type": 4,
+    "codename": "view_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 17,
+  "fields": {
+    "name": "Can add content type",
+    "content_type": 5,
+    "codename": "add_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 18,
+  "fields": {
+    "name": "Can change content type",
+    "content_type": 5,
+    "codename": "change_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 19,
+  "fields": {
+    "name": "Can delete content type",
+    "content_type": 5,
+    "codename": "delete_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 20,
+  "fields": {
+    "name": "Can view content type",
+    "content_type": 5,
+    "codename": "view_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 21,
+  "fields": {
+    "name": "Can add session",
+    "content_type": 6,
+    "codename": "add_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 22,
+  "fields": {
+    "name": "Can change session",
+    "content_type": 6,
+    "codename": "change_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 23,
+  "fields": {
+    "name": "Can delete session",
+    "content_type": 6,
+    "codename": "delete_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 24,
+  "fields": {
+    "name": "Can view session",
+    "content_type": 6,
+    "codename": "view_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 25,
+  "fields": {
+    "name": "Can add kriteria",
+    "content_type": 8,
+    "codename": "add_kriteria"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 26,
+  "fields": {
+    "name": "Can change kriteria",
+    "content_type": 8,
+    "codename": "change_kriteria"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 27,
+  "fields": {
+    "name": "Can delete kriteria",
+    "content_type": 8,
+    "codename": "delete_kriteria"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 28,
+  "fields": {
+    "name": "Can view kriteria",
+    "content_type": 8,
+    "codename": "view_kriteria"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 29,
+  "fields": {
+    "name": "Can add pengirim",
+    "content_type": 9,
+    "codename": "add_pengirim"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 30,
+  "fields": {
+    "name": "Can change pengirim",
+    "content_type": 9,
+    "codename": "change_pengirim"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 31,
+  "fields": {
+    "name": "Can delete pengirim",
+    "content_type": 9,
+    "codename": "delete_pengirim"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 32,
+  "fields": {
+    "name": "Can view pengirim",
+    "content_type": 9,
+    "codename": "view_pengirim"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 33,
+  "fields": {
+    "name": "Can add perihal",
+    "content_type": 10,
+    "codename": "add_perihal"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 34,
+  "fields": {
+    "name": "Can change perihal",
+    "content_type": 10,
+    "codename": "change_perihal"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 35,
+  "fields": {
+    "name": "Can delete perihal",
+    "content_type": 10,
+    "codename": "delete_perihal"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 36,
+  "fields": {
+    "name": "Can view perihal",
+    "content_type": 10,
+    "codename": "view_perihal"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 37,
+  "fields": {
+    "name": "Can add sifat",
+    "content_type": 11,
+    "codename": "add_sifat"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 38,
+  "fields": {
+    "name": "Can change sifat",
+    "content_type": 11,
+    "codename": "change_sifat"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 39,
+  "fields": {
+    "name": "Can delete sifat",
+    "content_type": 11,
+    "codename": "delete_sifat"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 40,
+  "fields": {
+    "name": "Can view sifat",
+    "content_type": 11,
+    "codename": "view_sifat"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 41,
+  "fields": {
+    "name": "Can add status",
+    "content_type": 12,
+    "codename": "add_status"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 42,
+  "fields": {
+    "name": "Can change status",
+    "content_type": 12,
+    "codename": "change_status"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 43,
+  "fields": {
+    "name": "Can delete status",
+    "content_type": 12,
+    "codename": "delete_status"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 44,
+  "fields": {
+    "name": "Can view status",
+    "content_type": 12,
+    "codename": "view_status"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 45,
+  "fields": {
+    "name": "Can add sumbersurat",
+    "content_type": 13,
+    "codename": "add_sumbersurat"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 46,
+  "fields": {
+    "name": "Can change sumbersurat",
+    "content_type": 13,
+    "codename": "change_sumbersurat"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 47,
+  "fields": {
+    "name": "Can delete sumbersurat",
+    "content_type": 13,
+    "codename": "delete_sumbersurat"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 48,
+  "fields": {
+    "name": "Can view sumbersurat",
+    "content_type": 13,
+    "codename": "view_sumbersurat"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 49,
+  "fields": {
+    "name": "Can add surat",
+    "content_type": 14,
+    "codename": "add_surat"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 50,
+  "fields": {
+    "name": "Can change surat",
+    "content_type": 14,
+    "codename": "change_surat"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 51,
+  "fields": {
+    "name": "Can delete surat",
+    "content_type": 14,
+    "codename": "delete_surat"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 52,
+  "fields": {
+    "name": "Can view surat",
+    "content_type": 14,
+    "codename": "view_surat"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 53,
+  "fields": {
+    "name": "Can add disposisi",
+    "content_type": 7,
+    "codename": "add_disposisi"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 54,
+  "fields": {
+    "name": "Can change disposisi",
+    "content_type": 7,
+    "codename": "change_disposisi"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 55,
+  "fields": {
+    "name": "Can delete disposisi",
+    "content_type": 7,
+    "codename": "delete_disposisi"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 56,
+  "fields": {
+    "name": "Can view disposisi",
+    "content_type": 7,
+    "codename": "view_disposisi"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 57,
+  "fields": {
+    "name": "Can add hasil",
+    "content_type": 15,
+    "codename": "add_hasil"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 58,
+  "fields": {
+    "name": "Can change hasil",
+    "content_type": 15,
+    "codename": "change_hasil"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 59,
+  "fields": {
+    "name": "Can delete hasil",
+    "content_type": 15,
+    "codename": "delete_hasil"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 60,
+  "fields": {
+    "name": "Can view hasil",
+    "content_type": 15,
+    "codename": "view_hasil"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 61,
+  "fields": {
+    "name": "Can add nilai",
+    "content_type": 16,
+    "codename": "add_nilai"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 62,
+  "fields": {
+    "name": "Can change nilai",
+    "content_type": 16,
+    "codename": "change_nilai"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 63,
+  "fields": {
+    "name": "Can delete nilai",
+    "content_type": 16,
+    "codename": "delete_nilai"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 64,
+  "fields": {
+    "name": "Can view nilai",
+    "content_type": 16,
+    "codename": "view_nilai"
+  }
+},
+{
+  "model": "auth.group",
+  "pk": 2,
+  "fields": {
+    "name": "Superadmin",
+    "permissions": [
+      1,
+      2,
+      3,
+      4,
+      9,
+      10,
+      11,
+      12,
+      5,
+      6,
+      7,
+      8,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      53,
+      54,
+      55,
+      56,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      21,
+      22,
+      23,
+      24,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64
+    ]
+  }
+},
+{
+  "model": "auth.group",
+  "pk": 3,
+  "fields": {
+    "name": "Admin",
+    "permissions": [
+      53,
+      54,
+      55,
+      56,
+      49,
+      50,
+      51,
+      52,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64
+    ]
+  }
+},
+{
+  "model": "auth.group",
+  "pk": 4,
+  "fields": {
+    "name": "Kabid",
+    "permissions": [
+      53,
+      56,
+      52,
+      60
+    ]
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$u0XDSg7egKszpHe6MGD3MS$QXHRraRbGeZt0vHVfSiQlwxdvN1RveqdDpteDpEsEus=",
+    "last_login": "2026-08-11T08:47:57.811Z",
+    "is_superuser": true,
+    "username": "Superadmin",
+    "first_name": "",
+    "last_name": "",
+    "email": "superadmin@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-05-16T10:15:45Z",
+    "groups": [
+      2
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$igyAemN5pjA5P0DVh8nTav$McazOXg3RMCi3hFy0BuArn1+Yj0v7enYwfxnWorGK18=",
+    "last_login": "2026-08-12T02:34:15.478Z",
+    "is_superuser": false,
+    "username": "Admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-05-16T10:16:54Z",
+    "groups": [
+      3
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$zkWnJb6K9fn8rOnMVFtYUV$sGIh4+Ucidhxbo1/+LjRA+Mjt+mmn3HsnxE8iqfYlsk=",
+    "last_login": "2026-08-11T09:42:04.411Z",
+    "is_superuser": false,
+    "username": "Kabid",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-05-16T10:17:18Z",
+    "groups": [
+      4
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 1,
+  "fields": {
+    "app_label": "admin",
+    "model": "logentry"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 2,
+  "fields": {
+    "app_label": "auth",
+    "model": "group"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 3,
+  "fields": {
+    "app_label": "auth",
+    "model": "permission"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 4,
+  "fields": {
+    "app_label": "auth",
+    "model": "user"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 5,
+  "fields": {
+    "app_label": "contenttypes",
+    "model": "contenttype"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 6,
+  "fields": {
+    "app_label": "sessions",
+    "model": "session"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 7,
+  "fields": {
+    "app_label": "core",
+    "model": "disposisi"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 8,
+  "fields": {
+    "app_label": "core",
+    "model": "kriteria"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 9,
+  "fields": {
+    "app_label": "core",
+    "model": "pengirim"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 10,
+  "fields": {
+    "app_label": "core",
+    "model": "perihal"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 11,
+  "fields": {
+    "app_label": "core",
+    "model": "sifat"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 12,
+  "fields": {
+    "app_label": "core",
+    "model": "status"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 13,
+  "fields": {
+    "app_label": "core",
+    "model": "sumbersurat"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 14,
+  "fields": {
+    "app_label": "core",
+    "model": "surat"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 15,
+  "fields": {
+    "app_label": "topsis",
+    "model": "hasil"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 16,
+  "fields": {
+    "app_label": "topsis",
+    "model": "nilai"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "fqjm88l8r5metx8rvyaixr8cwwcjlmt0",
+  "fields": {
+    "session_data": ".eJxVjLsOwjAMAP_FM4qa0DzoyM43RLbjkAJKpKadEP-OKnWA9e50b4i4rSVuXZY4J5hAw-mXEfJT6i7SA-u9KW51XWZSe6IO29WtJXldj_ZvULAXmODsiLRHb8JgrENia8mFnLMOJMxkgzUsyWQew-gdZZvEXFwg8ey1GeDzBfVeOG0:1wOc1c:Y5g5oHTnsKgCXh4qVm1yj0vPy09pCBJYECtikDnZ6l4",
+    "expire_date": "2026-05-31T13:59:24.194Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "kl4mwvvvhkpxafgt2tyuflirc76484s6",
+  "fields": {
+    "session_data": ".eJxVjLsOwjAMAP_FM4qa0DzoyM43RLbjkAJKpKadEP-OKnWA9e50b4i4rSVuXZY4J5hAw-mXEfJT6i7SA-u9KW51XWZSe6IO29WtJXldj_ZvULAXmODsiLRHb8JgrENia8mFnLMOJMxkgzUsyWQew-gdZZvEXFwg8ey1GeDzBfVeOG0:1wdIfd:l_kw8ZTY33vOHVycJro2cr0sKaFe1vuF0kiAwx2ByG4",
+    "expire_date": "2026-07-11T02:21:25.667Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "nftqsv8pyh08w5kpasqkrfcgmdoh9trq",
+  "fields": {
+    "session_data": ".eJxVjMsKwjAQAP9lzxKah8nSo3e_ISS7G1OVFJr2VPx3KfSg15lhdohpW2vcuixxYhjBwOWX5UQvaYfgZ2qPWdHc1mXK6kjUabu6zyzv29n-DWrqFUbAVHRAtGJ80IzeMntH6DLrMFBIGdEGTeKZWYSKRXZ01cVkGZwpBJ8v6PE4oA:1wtiZd:PotsB2AnreejHRyY8AH9AtuU8FJvyfZAP9H_vTUHMaY",
+    "expire_date": "2026-08-25T09:15:05.819Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "ntzkx4748sigi76oxlh8rqimmkuomzph",
+  "fields": {
+    "session_data": ".eJxVjLsOwjAMAP_FM4qa0DzoyM43RLbjkAJKpKadEP-OKnWA9e50b4i4rSVuXZY4J5hAw-mXEfJT6i7SA-u9KW51XWZSe6IO29WtJXldj_ZvULAXmODsiLRHb8JgrENia8mFnLMOJMxkgzUsyWQew-gdZZvEXFwg8ey1GeDzBfVeOG0:1wUzSI:WGwoDSB-ln7Jw89_Z_V_Qw28OkJQ6lc7YbWIweZrmbc",
+    "expire_date": "2026-06-18T04:13:18.266Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "tbekgd2vtm8rvpnqrmaeksmfgh1fd677",
+  "fields": {
+    "session_data": ".eJxVjLsOwjAMAP_FM4oSJzRpR_Z-Q2XHLimgVOpjQvw7qtQB1rvTvWGgfSvDvuoyTAIdIFx-GVN-aj2EPKjeZ5Pnui0TmyMxp11NP4u-bmf7Nyi0FujAowiP6BoU9im4ZJWSWqvRa6MtEY4Jk5PgsmbLFDjGkOnqLTaRYwufL-xSN_A:1wtynH:iktHG4hYDuJ-4artg6_3zgzfuYUUXpOX3iYHxgQyOTA",
+    "expire_date": "2026-08-26T02:34:15.484Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "zzpqafo3m68k4it8lrkmvf5qb8rayqq8",
+  "fields": {
+    "session_data": ".eJxVjLsOwjAMAP_FM4qa0DzoyM43RLbjkAJKpKadEP-OKnWA9e50b4i4rSVuXZY4J5hAw-mXEfJT6i7SA-u9KW51XWZSe6IO29WtJXldj_ZvULAXmODsiLRHb8JgrENia8mFnLMOJMxkgzUsyWQew-gdZZvEXFwg8ey1GeDzBfVeOG0:1wUzSI:WGwoDSB-ln7Jw89_Z_V_Qw28OkJQ6lc7YbWIweZrmbc",
+    "expire_date": "2026-06-18T04:13:18.316Z"
+  }
+},
+{
+  "model": "core.surat",
+  "pk": 2,
+  "fields": {
+    "no_surat": "900.1.15.1/067/KEUDA",
+    "perihal": 1,
+    "file": "surat/08012026_067_UNDANGAN_RAPAT_KOORDINASI_KEMENDAGRI_DIRJEN_BINA_KEUDA_pexHeLr.pdf",
+    "tanggal": "2026-05-16",
+    "tanggal_surat": "2026-01-07",
+    "pengirim": 5,
+    "sumber_surat": 1,
+    "keterangan": "Undangan Rapat koordinasi",
+    "status": 2,
+    "sifat": 1
+  }
+},
+{
+  "model": "core.surat",
+  "pk": 3,
+  "fields": {
+    "no_surat": "100.1.7/12657/2025",
+    "perihal": 4,
+    "file": "surat/07012026_12657_Penyampaian_Format_Pengisian_Data_LPPD_dan_LKPJ_TA_2025_PJ_SEKDA_SLJGoK5.pdf",
+    "tanggal": "2026-05-16",
+    "tanggal_surat": "2025-12-31",
+    "pengirim": 2,
+    "sumber_surat": 2,
+    "keterangan": "Pj. Sekda - Penyampaian Format Pengisian Data LPPD dan LKPJ TA 2025",
+    "status": 2,
+    "sifat": 4
+  }
+},
+{
+  "model": "core.surat",
+  "pk": 12,
+  "fields": {
+    "no_surat": "400.14.1.1/003/IV/2026",
+    "perihal": 6,
+    "file": "surat/23042026_003_UPACARA_PERINGATAN_HARI_OTONOMI_DAERAH_XXX_TAHUN_2026_PJ_SEKDA_PROVSU_teNGocO.pdf",
+    "tanggal": "2026-06-13",
+    "tanggal_surat": "2026-04-23",
+    "pengirim": 2,
+    "sumber_surat": 2,
+    "keterangan": "Upacara Peringatan Hari Otonomi Daerah XXX Tahun 2026",
+    "status": 2,
+    "sifat": 1
+  }
+},
+{
+  "model": "core.surat",
+  "pk": 13,
+  "fields": {
+    "no_surat": "700.1.2/560/ITPROVSU/III/2026",
+    "perihal": 4,
+    "file": "surat/02042026_560_PENYAMPAIAN_LAPORAN_REALISASI_PENYERAPAN_TAHAP_III_DAU_INSPEKTORAT_PR_RraNj1w.pdf",
+    "tanggal": "2026-07-28",
+    "tanggal_surat": "2026-03-05",
+    "pengirim": 47,
+    "sumber_surat": 2,
+    "keterangan": "Penyampaian Laporan Realisasi Penerapan Tahap III Dana Alokasi Umum (DAU) TA 2025",
+    "status": 2,
+    "sifat": 3
+  }
+},
+{
+  "model": "core.surat",
+  "pk": 23,
+  "fields": {
+    "no_surat": "S-233/KPN.0201/2026",
+    "perihal": 2,
+    "file": "surat/S-233KPN.02012026.pdf",
+    "tanggal": "2026-08-12",
+    "tanggal_surat": "2026-03-03",
+    "pengirim": 49,
+    "sumber_surat": 1,
+    "keterangan": "Permintaan Softcopy Laporan Keuangan BUMD Tahun 2025",
+    "status": 2,
+    "sifat": 1
+  }
+},
+{
+  "model": "core.kriteria",
+  "pk": 1,
+  "fields": {
+    "nama": "Kepentingan",
+    "bobot": 0.24
+  }
+},
+{
+  "model": "core.kriteria",
+  "pk": 2,
+  "fields": {
+    "nama": "Sumber Surat",
+    "bobot": 0.27
+  }
+},
+{
+  "model": "core.kriteria",
+  "pk": 3,
+  "fields": {
+    "nama": "Jenis Surat",
+    "bobot": 0.2
+  }
+},
+{
+  "model": "core.kriteria",
+  "pk": 4,
+  "fields": {
+    "nama": "Deadline",
+    "bobot": 0.29
+  }
+},
+{
+  "model": "core.perihal",
+  "pk": 1,
+  "fields": {
+    "hal": "Undangan Rapat"
+  }
+},
+{
+  "model": "core.perihal",
+  "pk": 2,
+  "fields": {
+    "hal": "Permintaan Data"
+  }
+},
+{
+  "model": "core.perihal",
+  "pk": 3,
+  "fields": {
+    "hal": "Permohonan Penerimaan"
+  }
+},
+{
+  "model": "core.perihal",
+  "pk": 4,
+  "fields": {
+    "hal": "Penyampaian Laporan"
+  }
+},
+{
+  "model": "core.perihal",
+  "pk": 6,
+  "fields": {
+    "hal": "Penugasan Instansi"
+  }
+},
+{
+  "model": "core.sumbersurat",
+  "pk": 1,
+  "fields": {
+    "nama": "Kementerian Dalam Negeri Republik Indonesia (Kemendagri)"
+  }
+},
+{
+  "model": "core.sumbersurat",
+  "pk": 2,
+  "fields": {
+    "nama": "Pemerintah Daerah Provinsi"
+  }
+},
+{
+  "model": "core.sumbersurat",
+  "pk": 3,
+  "fields": {
+    "nama": "Pemerintah Kabupaten/Kota"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 1,
+  "fields": {
+    "nama": "Gubernur Provinsi Sumatera Utara"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 2,
+  "fields": {
+    "nama": "Sekretaris Daerah Provinsi Sumatera Utara"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 3,
+  "fields": {
+    "nama": "DPRD Provinsi Sumatera Utara"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 4,
+  "fields": {
+    "nama": "Dinas Pendidikan"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 5,
+  "fields": {
+    "nama": "Kemendagri Dirjen Bina Keuda"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 6,
+  "fields": {
+    "nama": "Dinas Kesehatan"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 7,
+  "fields": {
+    "nama": "UPTD Rumah Sakit Umum Haji Medan"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 8,
+  "fields": {
+    "nama": "UPTD Rumah Sakit Jiwa Prof. Dr. M. Ildrem"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 9,
+  "fields": {
+    "nama": "Dinas Pekerjaan Umum dan Penataan Ruang"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 10,
+  "fields": {
+    "nama": "Dinas Bina Marga, Bina Konstruksi dan Cipta Karya"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 11,
+  "fields": {
+    "nama": "Dinas Sumber Daya Air"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 12,
+  "fields": {
+    "nama": "Dinas Perumahan dan Kawasan Permukiman"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 13,
+  "fields": {
+    "nama": "Satuan Polisi Pamong Praja"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 14,
+  "fields": {
+    "nama": "Badan Penanggulangan Bencana Daerah"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 15,
+  "fields": {
+    "nama": "Dinas Sosial"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 16,
+  "fields": {
+    "nama": "Dinas Ketenagakerjaan"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 17,
+  "fields": {
+    "nama": "Dinas Pemberdayaan Perempuan, Perlindungan Anak dan Keluarga Berencana"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 18,
+  "fields": {
+    "nama": "Dinas Ketahanan Pangan, Tanaman Pangan dan Hortikultura"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 19,
+  "fields": {
+    "nama": "Dinas Pertanian dan Ketahanan Pangan"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 20,
+  "fields": {
+    "nama": "Dinas Lingkungan Hidup dan Kehutanan"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 21,
+  "fields": {
+    "nama": "Dinas Pemberdayaan Masyarakat dan Desa, Kependudukan dan Catatan Sipil"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 22,
+  "fields": {
+    "nama": "Dinas Perhubungan"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 23,
+  "fields": {
+    "nama": "Dinas Komunikasi dan Informatika"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 24,
+  "fields": {
+    "nama": "Dinas Koperasi dan Usaha Kecil Menengah"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 25,
+  "fields": {
+    "nama": "Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 26,
+  "fields": {
+    "nama": "Dinas Kepemudaan dan Keolahragaan"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 27,
+  "fields": {
+    "nama": "Dinas Kebudayaan, Pariwisata dan Ekonomi Kreatif"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 28,
+  "fields": {
+    "nama": "Dinas Perpustakaan dan Arsip"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 29,
+  "fields": {
+    "nama": "Dinas Kelautan dan Perikanan"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 30,
+  "fields": {
+    "nama": "Dinas Perkebunan dan Peternakan"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 31,
+  "fields": {
+    "nama": "Dinas Perindustrian, Perdagangan, Energi dan Sumber Daya Mineral"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 32,
+  "fields": {
+    "nama": "Biro Umum"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 33,
+  "fields": {
+    "nama": "Biro Pemerintahan dan Otonomi Daerah"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 34,
+  "fields": {
+    "nama": "Biro Perekonomian"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 35,
+  "fields": {
+    "nama": "Biro Kesejahteraan Rakyat"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 36,
+  "fields": {
+    "nama": "Biro Organisasi"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 37,
+  "fields": {
+    "nama": "Biro Pengadaan Barang dan Jasa"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 38,
+  "fields": {
+    "nama": "Biro Administrasi Pembangunan"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 39,
+  "fields": {
+    "nama": "Biro Hukum"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 40,
+  "fields": {
+    "nama": "Biro Administrasi Pimpinan"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 41,
+  "fields": {
+    "nama": "Badan Perencanaan Pembangunan, Penelitian dan Pengembangan"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 42,
+  "fields": {
+    "nama": "Badan Keuangan dan Aset Daerah"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 43,
+  "fields": {
+    "nama": "Badan Pendapatan Daerah"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 44,
+  "fields": {
+    "nama": "Badan Kepegawaian"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 45,
+  "fields": {
+    "nama": "Badan Pengembangan Sumber Daya Manusia"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 46,
+  "fields": {
+    "nama": "Badan Penghubung"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 47,
+  "fields": {
+    "nama": "Inspektorat"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 48,
+  "fields": {
+    "nama": "Badan Kesatuan Bangsa dan Politik"
+  }
+},
+{
+  "model": "core.pengirim",
+  "pk": 49,
+  "fields": {
+    "nama": "KEMENKUE RI - KANWIL DKP PROVSU"
+  }
+},
+{
+  "model": "core.status",
+  "pk": 1,
+  "fields": {
+    "nama": "Proses"
+  }
+},
+{
+  "model": "core.status",
+  "pk": 2,
+  "fields": {
+    "nama": "Selesai"
+  }
+},
+{
+  "model": "core.sifat",
+  "pk": 1,
+  "fields": {
+    "nama": "Sangat Segera"
+  }
+},
+{
+  "model": "core.sifat",
+  "pk": 2,
+  "fields": {
+    "nama": "Segera"
+  }
+},
+{
+  "model": "core.sifat",
+  "pk": 3,
+  "fields": {
+    "nama": "Rahasia"
+  }
+},
+{
+  "model": "core.sifat",
+  "pk": 4,
+  "fields": {
+    "nama": "Biasa"
+  }
+},
+{
+  "model": "core.disposisi",
+  "pk": 1,
+  "fields": {
+    "surat": 2,
+    "catatan": "ikuti ya.....",
+    "tujuan": "Kasubbid 1",
+    "tanggal": "2026-05-16T15:44:45.915Z"
+  }
+},
+{
+  "model": "core.disposisi",
+  "pk": 2,
+  "fields": {
+    "surat": 3,
+    "catatan": "Tindak Lanjuti sesuai ketentuan",
+    "tujuan": "Kasubbid2",
+    "tanggal": "2026-05-16T16:41:29.866Z"
+  }
+},
+{
+  "model": "core.disposisi",
+  "pk": 10,
+  "fields": {
+    "surat": 12,
+    "catatan": "arahkan semua staff bidang akuntansi agar mengikuti.",
+    "tujuan": "Arsip",
+    "tanggal": "2026-06-13T06:04:56.303Z"
+  }
+},
+{
+  "model": "core.disposisi",
+  "pk": 11,
+  "fields": {
+    "surat": 13,
+    "catatan": "tolong diarsipkan dan cek ulang isi laporan nya ya....",
+    "tujuan": "Kasubbid 3",
+    "tanggal": "2026-07-28T03:47:44.682Z"
+  }
+},
+{
+  "model": "core.disposisi",
+  "pk": 21,
+  "fields": {
+    "surat": 23,
+    "catatan": "",
+    "tujuan": null,
+    "tanggal": "2026-08-12T02:35:02.355Z"
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 1,
+  "fields": {
+    "surat": 2,
+    "kriteria": 1,
+    "nilai": 70.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 2,
+  "fields": {
+    "surat": 2,
+    "kriteria": 2,
+    "nilai": 100.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 3,
+  "fields": {
+    "surat": 2,
+    "kriteria": 3,
+    "nilai": 100.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 4,
+  "fields": {
+    "surat": 2,
+    "kriteria": 4,
+    "nilai": 50.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 5,
+  "fields": {
+    "surat": 3,
+    "kriteria": 1,
+    "nilai": 50.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 6,
+  "fields": {
+    "surat": 3,
+    "kriteria": 2,
+    "nilai": 100.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 7,
+  "fields": {
+    "surat": 3,
+    "kriteria": 3,
+    "nilai": 40.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 8,
+  "fields": {
+    "surat": 3,
+    "kriteria": 4,
+    "nilai": 50.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 37,
+  "fields": {
+    "surat": 12,
+    "kriteria": 1,
+    "nilai": 90.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 38,
+  "fields": {
+    "surat": 12,
+    "kriteria": 2,
+    "nilai": 100.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 39,
+  "fields": {
+    "surat": 12,
+    "kriteria": 3,
+    "nilai": 100.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 40,
+  "fields": {
+    "surat": 12,
+    "kriteria": 4,
+    "nilai": 50.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 41,
+  "fields": {
+    "surat": 13,
+    "kriteria": 1,
+    "nilai": 50.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 42,
+  "fields": {
+    "surat": 13,
+    "kriteria": 2,
+    "nilai": 100.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 43,
+  "fields": {
+    "surat": 13,
+    "kriteria": 3,
+    "nilai": 70.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 44,
+  "fields": {
+    "surat": 13,
+    "kriteria": 4,
+    "nilai": 50.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 65,
+  "fields": {
+    "surat": 19,
+    "kriteria": 1,
+    "nilai": 70.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 66,
+  "fields": {
+    "surat": 19,
+    "kriteria": 2,
+    "nilai": 100.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 67,
+  "fields": {
+    "surat": 19,
+    "kriteria": 3,
+    "nilai": 85.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 68,
+  "fields": {
+    "surat": 19,
+    "kriteria": 4,
+    "nilai": 50.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 69,
+  "fields": {
+    "surat": 20,
+    "kriteria": 1,
+    "nilai": 70.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 70,
+  "fields": {
+    "surat": 20,
+    "kriteria": 2,
+    "nilai": 100.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 71,
+  "fields": {
+    "surat": 20,
+    "kriteria": 3,
+    "nilai": 85.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 72,
+  "fields": {
+    "surat": 20,
+    "kriteria": 4,
+    "nilai": 50.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 73,
+  "fields": {
+    "surat": 21,
+    "kriteria": 1,
+    "nilai": 80.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 74,
+  "fields": {
+    "surat": 21,
+    "kriteria": 2,
+    "nilai": 100.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 75,
+  "fields": {
+    "surat": 21,
+    "kriteria": 3,
+    "nilai": 85.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 76,
+  "fields": {
+    "surat": 21,
+    "kriteria": 4,
+    "nilai": 50.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 77,
+  "fields": {
+    "surat": 22,
+    "kriteria": 1,
+    "nilai": 50.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 78,
+  "fields": {
+    "surat": 22,
+    "kriteria": 2,
+    "nilai": 100.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 79,
+  "fields": {
+    "surat": 22,
+    "kriteria": 3,
+    "nilai": 85.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 80,
+  "fields": {
+    "surat": 22,
+    "kriteria": 4,
+    "nilai": 50.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 81,
+  "fields": {
+    "surat": 23,
+    "kriteria": 1,
+    "nilai": 80.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 82,
+  "fields": {
+    "surat": 23,
+    "kriteria": 2,
+    "nilai": 100.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 83,
+  "fields": {
+    "surat": 23,
+    "kriteria": 3,
+    "nilai": 100.0
+  }
+},
+{
+  "model": "topsis.nilai",
+  "pk": 84,
+  "fields": {
+    "surat": 23,
+    "kriteria": 4,
+    "nilai": 50.0
+  }
+},
+{
+  "model": "topsis.hasil",
+  "pk": 145,
+  "fields": {
+    "surat": 12,
+    "preferensi": 1.0,
+    "ranking": 1
+  }
+},
+{
+  "model": "topsis.hasil",
+  "pk": 146,
+  "fields": {
+    "surat": 23,
+    "preferensi": 0.83528,
+    "ranking": 2
+  }
+},
+{
+  "model": "topsis.hasil",
+  "pk": 147,
+  "fields": {
+    "surat": 2,
+    "preferensi": 0.69471,
+    "ranking": 3
+  }
+},
+{
+  "model": "topsis.hasil",
+  "pk": 148,
+  "fields": {
+    "surat": 13,
+    "preferensi": 0.31273,
+    "ranking": 4
+  }
+},
+{
+  "model": "topsis.hasil",
+  "pk": 149,
+  "fields": {
+    "surat": 3,
+    "preferensi": 0.0,
+    "ranking": 5
+  }
+}
+]

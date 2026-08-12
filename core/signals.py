@@ -43,6 +43,9 @@ def update_status_surat(sender, instance, created, **kwargs):
     """
     Kalau disposisi dibuat/diupdate, otomatis status surat = Selesai
     """
+    if kwargs.get("raw", False):
+        return
+    
     surat = instance.surat
     status_selesai, _ = Status.objects.get_or_create(nama="Selesai")
     surat.status = status_selesai
