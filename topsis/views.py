@@ -259,6 +259,7 @@ def disposisi_manage(request, surat_id):
         "surat": surat
     })
 
+@login_required
 def disposisi_beri(request):
     query = request.GET.get("q", "").strip()
 

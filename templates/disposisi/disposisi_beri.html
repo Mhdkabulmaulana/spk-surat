@@ -3,7 +3,7 @@
 {% block content %}
 <div class="bg-white shadow-lg rounded-lg p-6">
 
-    <h2 class="text-2xl font-bold mb-4">SURAT BELUM DIDISPOSISI</h2>
+    <h2 class="text-2xl font-bold mb-4">DATA BELUM DIDISPOSISI</h2>
 
     <div class="flex space-x-4 mb-4 justify-end">
         <form method="get" class="flex space-x-2 items-center">
@@ -63,18 +63,9 @@
                 </td>
 
                 <td class="text-center py-2 px-4">
-
-                    {% if user|in_groups:"Superadmin,Kabid" %}
-
-                    <a
-                        href="{% url 'disposisi_manage' s.id %}"
-                        class="rounded px-3 py-2 text-sm text-white bg-blue-600 hover:bg-blue-700"
-                    >
-                        Beri Disposisi
+                    <a href="{% url 'disposisi_manage' s.id %}" class="rounded px-3 py-2 text-sm text-white bg-blue-600 hover:bg-blue-700">
+                    Beri Disposisi
                     </a>
-
-                    {% endif %}
-
                 </td>
 
             </tr>
