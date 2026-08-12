@@ -91,13 +91,43 @@ def export_pdf(request):
     surat_qs = Surat.objects.all().order_by('-id')
     template_path = 'surat/export_pdf.html'
 
-    import locale
-    locale.setlocale(locale.LC_TIME, "id_ID.UTF-8")
-
     now = timezone.localtime(timezone.now())
+    hari = {
+        "Monday": "Senin",
+        "Tuesday": "Selasa",
+        "Wednesday": "Rabu",
+        "Thursday": "Kamis",
+        "Friday": "Jumat",
+        "Saturday": "Sabtu",
+        "Sunday": "Minggu",
+    }
+
+    bulan = {
+        "January": "Januari",
+        "February": "Februari",
+        "March": "Maret",
+        "April": "April",
+        "May": "Mei",
+        "June": "Juni",
+        "July": "Juli",
+        "August": "Agustus",
+        "September": "September",
+        "October": "Oktober",
+        "November": "November",
+        "December": "Desember",
+    }
+
+    dicetak = (
+        f"{hari[now.strftime('%A')]}, "
+        f"{now.strftime('%d')} "
+        f"{bulan[now.strftime('%B')]} "
+        f"{now.strftime('%Y')} "
+        f"pukul {now.strftime('%H:%M')} WIB"
+    )
+
     context = {
         "surat_qs": surat_qs,
-        "dicetak": now.strftime("%A, %d %B %Y pukul %H:%M WIB"),
+        "dicetak": dicetak,
     }
 
     template = get_template(template_path)
