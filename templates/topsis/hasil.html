@@ -88,9 +88,6 @@
             <th class="py-2 px-4 text-center">Preferensi</th>
             <th class="py-2 px-4 text-center">Ranking</th>
             <th class="py-2 px-4 text-center">Status</th>
-            {% if user|in_groups:"Superadmin,Kabid" %}
-            <th class="py-2 px-4 text-center">Diposisi</th>
-            {% endif %}
         </tr>
         </thead>
         <tbody>
@@ -117,12 +114,6 @@
                     📄 Biasa
                 {% endif %}
                 </td>
-                {% if user|in_groups:"Superadmin,Kabid" %}
-                <td class="text-center py-2 px-4">
-                    <a href="{% url 'disposisi_manage' h.surat.id %}" class="rounded px-3 py-2 text-sm text-white bg-blue-600 hover:bg-blue-700">Beri Disposisi</a>
-                </td>
-                {% endif %}
-            </tr>
             {% endfor %}
         </tbody>
     </table>
