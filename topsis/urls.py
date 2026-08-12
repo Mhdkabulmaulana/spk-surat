@@ -10,6 +10,7 @@ urlpatterns = [
     path('hasil/', views.hasil, name='hasil'),
     path('grafik/', views.grafik, name='grafik'),
 
+    path('disposisi/beri/', views.disposisi_beri, name='disposisi_beri'),
     path('disposisi/', views.disposisi_index, name='disposisi_index'),
     path('surat/<int:surat_id>/disposisi/', views.disposisi_manage, name='disposisi_manage'),
     path('exportdisposisi_pdf/', views.exportdisposisi_pdf, name='exportdisposisi_pdf'),

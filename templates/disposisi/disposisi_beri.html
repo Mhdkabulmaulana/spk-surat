@@ -2,145 +2,162 @@
 
 {% block content %}
 <div class="bg-white shadow-lg rounded-lg p-6">
-<h2 class="text-2xl font-bold mb-4">DATA DISPOSISI</h2>
 
-<div class="flex space-x-4 mb-4 justify-end" x-data="{ openFilter: false, selectedFilter: '' }">
-  <form method="get" class="flex space-x-2 items-center">
-    <!-- Search berdasarkan No Surat -->
-    <input type="text" name="q" value="{{ query|default:'' }}" 
-           placeholder="Cari berdasarkan No Surat..." 
-           class="border rounded p-2 w-64">
+    <h2 class="text-2xl font-bold mb-4">SURAT BELUM DIDISPOSISI</h2>
 
-    <!-- Tombol filter -->
-    <div class="relative">
-      <button type="button" @click="openFilter = !openFilter"
-              class="bg-gray-500 text-white px-3 py-2 rounded inline-flex items-center">
-        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2l-7 7v5l-4 2v-7L3 6V4z"/>
-        </svg>
-        Filter
-      </button>
+    <div class="flex space-x-4 mb-4 justify-end">
+        <form method="get" class="flex space-x-2 items-center">
 
-      <!-- Dropdown kategori filter -->
-      <div x-show="openFilter" @click.away="openFilter = false"
-           class="absolute left-0 top-full mt-1 bg-white border rounded shadow-lg z-10 inline-block min-w-max">
-        <button type="button" @click="selectedFilter = 'tujuan'; openFilter=false"
-                class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Tujuan</button>
-        <button type="button" @click="selectedFilter = 'tanggal'; openFilter=false"
-                class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Tanggal</button>
-      </div>
+            <input
+                type="text"
+                name="q"
+                value="{{ query|default:'' }}"
+                placeholder="Cari berdasarkan No Surat..."
+                class="border rounded p-2 w-64"
+            >
+
+            <button
+                type="submit"
+                class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            >
+                Search
+            </button>
+
+        </form>
     </div>
 
-    <!-- Dropdown kedua sesuai kategori -->
-    <template x-if="selectedFilter === 'tujuan'">
-      <select name="tujuan" class="border rounded p-2 w-48 truncate">
-        <option value="">-- Semua Tujuan --</option>
-        {% for t in tujuan_list %}
-          <option value="{{ t }}" {% if tujuan_filter == t %}selected{% endif %}>
-            {{ t }}
-          </option>
-        {% endfor %}
-      </select>
-    </template>
+    <table class="w-full border border-gray-500 border-collapse">
+        <thead>
+            <tr class="bg-green-600 text-white">
+                <th class="px-4 py-2">#</th>
+                <th class="px-4 py-2">No Surat</th>
+                <th class="px-4 py-2">Tanggal Surat</th>
+                <th class="px-4 py-2">Perihal</th>
+                <th class="px-4 py-2">Pengirim</th>
+                <th class="px-4 py-2">Beri Disposisi</th>
+            </tr>
+        </thead>
 
-    <template x-if="selectedFilter === 'tanggal'">
-      <select name="tanggal" class="border rounded p-2 w-48 truncate">
-        <option value="">-- Semua Tanggal --</option>
-        {% for tg in tanggal_list %}
-          <option value="{{ tg|date:'Y-m-d' }}" {% if tanggal_filter == tg|date:'Y-m-d' %}selected{% endif %}>
-            {{ tg|date:"d-m-Y" }}
-          </option>
-        {% endfor %}
-      </select>
-    </template>
+        <tbody>
+            {% for s in page_obj %}
+            <tr>
 
-    <!-- Tombol search -->
-    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-      Search
-    </button>
-  </form>
+                <td class="text-center py-2 px-4">
+                    {{ forloop.counter0|add:page_obj.start_index }}
+                </td>
+
+                <td class="text-center px-4 py-2">
+                    {{ s.no_surat }}
+                </td>
+
+                <td class="text-center px-4 py-2">
+                    {{ s.tanggal_surat|date:"d-m-Y" }}
+                </td>
+
+                <td class="text-center px-4 py-2">
+                    {{ s.perihal }}
+                </td>
+
+                <td class="text-center px-4 py-2">
+                    {{ s.pengirim }}
+                </td>
+
+                <td class="text-center py-2 px-4">
+
+                    {% if user|in_groups:"Superadmin,Kabid" %}
+
+                    <a
+                        href="{% url 'disposisi_manage' s.id %}"
+                        class="rounded px-3 py-2 text-sm text-white bg-blue-600 hover:bg-blue-700"
+                    >
+                        Beri Disposisi
+                    </a>
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+            {% empty %}
+
+            <tr>
+                <td colspan="6" class="text-center py-4">
+                    Semua surat sudah memiliki disposisi
+                </td>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    <!-- Pagination -->
+
+    <div class="flex justify-center mt-4">
+
+        <nav class="inline-flex space-x-1">
+
+            {% if page_obj.has_previous %}
+
+            <a
+                href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}"
+                class="px-3 py-1 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100"
+            >
+                Previous
+            </a>
+
+            {% else %}
+
+            <span class="px-3 py-1 rounded-md border border-gray-300 bg-gray-200 text-gray-400">
+                Previous
+            </span>
+
+            {% endif %}
+
+
+            {% for num in page_obj.paginator.page_range %}
+
+                {% if page_obj.number == num %}
+
+                <span class="px-3 py-1 rounded-md border border-green-500 bg-green-500 text-white">
+                    {{ num }}
+                </span>
+
+                {% else %}
+
+                <a
+                    href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}"
+                    class="px-3 py-1 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100"
+                >
+                    {{ num }}
+                </a>
+
+                {% endif %}
+
+            {% endfor %}
+
+
+            {% if page_obj.has_next %}
+
+            <a
+                href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}"
+                class="px-3 py-1 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100"
+            >
+                Next
+            </a>
+
+            {% else %}
+
+            <span class="px-3 py-1 rounded-md border border-gray-300 bg-gray-200 text-gray-400">
+                Next
+            </span>
+
+            {% endif %}
+
+        </nav>
+
+    </div>
+
 </div>
-
-<div class="flex justify-end space-x-2 mb-4">
-        <a href="{% url 'exportdisposisi_pdf' %}" class="bg-red-600 hover:bg-red-400 text-white px-4 py-2 rounded">Export PDF</a>
-    </div> 
-
-<table class="w-full border border-gray-500 border-collapse">
-  <thead>
-    <tr class="bg-green-600 text-white">
-      <th class="px-4 py-2">#</th>
-      <th class="px-4 py-2">No Surat</th>
-      <th class="px-4 py-2">Tujuan</th>
-      <th class="px-4 py-2">Catatan Disposisi</th>
-      <th class="px-4 py-2">Tanggal</th>
-      {% if user|in_groups:"Superadmin,Kabid" %}
-      <th class="px-4 py-2">Beri Disposisi</th>
-      {% endif %}
-    </tr>
-  </thead>
-  <tbody>
-    {% for d in page_obj %}
-      <tr>
-        <td class="text-center py-2 px-4">{{ forloop.counter0|add:page_obj.start_index }}</td>
-        <td class="text-center px-4 py-2">{{ d.surat.no_surat }}</td>
-        <td class="text-center px-4 py-2">{{ d.tujuan }}</td>
-        <td class="text-center px-4 py-2">{{ d.catatan }}</td>
-        <td class="text-center px-4 py-2">{{ d.tanggal|date:"d-m-Y H:i" }}</td>
-        {% if user|in_groups:"Superadmin,Kabid" %}
-        <td class="text-center py-2 px-4">
-            <a href="{% url 'disposisi_manage' h.surat.id %}" class="rounded px-3 py-2 text-sm text-white bg-blue-600 hover:bg-blue-700">Beri Disposisi</a>
-        </td>
-        {% endif %}
-      </tr>
-    {% empty %}
-      <tr>
-        <td colspan="4" class="text-center py-4">Belum ada disposisi</td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
-
-<!-- Navigasi pagination -->
-<div class="flex justify-center mt-4">
-  <nav class="inline-flex space-x-1">
-    {% if page_obj.has_previous %}
-      <a href="?page={{ page_obj.previous_page_number }}"
-         class="px-3 py-1 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100">
-        Previous
-      </a>
-    {% else %}
-      <span class="px-3 py-1 rounded-md border border-gray-300 bg-gray-200 text-gray-400 cursor-not-allowed">
-        Previous
-      </span>
-    {% endif %}
-
-    {% for num in page_obj.paginator.page_range %}
-      {% if page_obj.number == num %}
-        <span class="px-3 py-1 rounded-md border border-green-500 bg-green-500 text-white">
-          {{ num }}
-        </span>
-      {% else %}
-        <a href="?page={{ num }}"
-           class="px-3 py-1 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100">
-          {{ num }}
-        </a>
-      {% endif %}
-    {% endfor %}
-
-    {% if page_obj.has_next %}
-      <a href="?page={{ page_obj.next_page_number }}"
-         class="px-3 py-1 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100">
-        Next
-      </a>
-    {% else %}
-      <span class="px-3 py-1 rounded-md border border-gray-300 bg-gray-200 text-gray-400 cursor-not-allowed">
-        Next
-      </span>
-    {% endif %}
-  </nav>
-</div>
-
-</div>
-
 {% endblock %}
