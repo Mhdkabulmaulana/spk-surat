@@ -11,7 +11,7 @@ import logging
 from django.http import HttpResponse
 from xhtml2pdf import pisa
 from django.utils import timezone
-import locale
+
 from django.http import HttpResponse
 from reportlab.lib.pagesizes import A4, landscape
 from django.template.loader import get_template
@@ -143,67 +143,79 @@ def disposisi_index(request):
 
 @login_required
 def exportdisposisi_pdf(request):
-    dispo = Disposisi.objects.all().order_by('-id')
-    template_path = 'topsis/export_pdf.html'
+    try:
+        dispo = Disposisi.objects.all().order_by('-id')
 
-    import locale
-    locale.setlocale(locale.LC_TIME, "id_ID.UTF-8")
+        now = timezone.localtime(timezone.now())
 
-    now = timezone.localtime(timezone.now())
+        hari = {
+            "Monday": "Senin",
+            "Tuesday": "Selasa",
+            "Wednesday": "Rabu",
+            "Thursday": "Kamis",
+            "Friday": "Jumat",
+            "Saturday": "Sabtu",
+            "Sunday": "Minggu",
+        }
 
-    hari = {
-        "Monday": "Senin",
-        "Tuesday": "Selasa",
-        "Wednesday": "Rabu",
-        "Thursday": "Kamis",
-        "Friday": "Jumat",
-        "Saturday": "Sabtu",
-        "Sunday": "Minggu",
-    }
+        bulan = {
+            "January": "Januari",
+            "February": "Februari",
+            "March": "Maret",
+            "April": "April",
+            "May": "Mei",
+            "June": "Juni",
+            "July": "Juli",
+            "August": "Agustus",
+            "September": "September",
+            "October": "Oktober",
+            "November": "November",
+            "December": "Desember",
+        }
 
-    bulan = {
-        "January": "Januari",
-        "February": "Februari",
-        "March": "Maret",
-        "April": "April",
-        "May": "Mei",
-        "June": "Juni",
-        "July": "Juli",
-        "August": "Agustus",
-        "September": "September",
-        "October": "Oktober",
-        "November": "November",
-        "December": "Desember",
-    }
+        dicetak = (
+            f"{hari[now.strftime('%A')]}, "
+            f"{now.strftime('%d')} "
+            f"{bulan[now.strftime('%B')]} "
+            f"{now.strftime('%Y')} "
+            f"pukul {now.strftime('%H:%M')} WIB"
+        )
 
-    dicetak = (
-        f"{hari[now.strftime('%A')]}, "
-        f"{now.strftime('%d')} "
-        f"{bulan[now.strftime('%B')]} "
-        f"{now.strftime('%Y')} "
-        f"pukul {now.strftime('%H:%M')} WIB"
-    )
+        context = {
+            "dispo": dispo,
+            "dicetak": dicetak,
+        }
 
-    context = {
-        "dispo": dispo,
-        "dicetak": dicetak,
-    }
+        template = get_template('topsis/export_pdf.html')
+        html = template.render(context)
 
-    template = get_template(template_path)
-    html = template.render(context)
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = (
+            'attachment; filename="rekap-disposisi-surat.pdf"'
+        )
 
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="rekap-disposisi-surat.pdf"'
+        pisa_status = pisa.CreatePDF(
+            html,
+            dest=response,
+            default_page_size=landscape(A4)
+        )
 
-    pisa_status = pisa.CreatePDF(
-        html,
-        dest=response,
-        default_page_size=landscape(A4)
-    )
+        if pisa_status.err:
+            return HttpResponse(
+                "ERROR PDF:<br><pre>" + html + "</pre>",
+                status=500
+            )
 
-    if pisa_status.err:
-        return HttpResponse('Error saat membuat PDF <pre>' + html + '</pre>')
-    return response
+        return response
+
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+
+        return HttpResponse(
+            f"<h3>Error export PDF:</h3><pre>{traceback.format_exc()}</pre>",
+            status=500
+        )
 
 def tambah_disposisi(request, surat_id):
     surat = get_object_or_404(Surat, id=surat_id)
