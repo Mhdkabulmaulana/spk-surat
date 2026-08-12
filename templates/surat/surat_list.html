@@ -102,9 +102,7 @@
             <th class="py-2 px-4 text-center">Sumber</th>
             <th class="py-2 px-4 text-center">Perihal</th>
             <th class="py-2 px-4 text-center">Disposisi</th>
-            {% if user|in_groups:"Superadmin,Admin" %}
             <th class="py-2 px-4 text-center">Aksi</th>
-            {% endif %}
         </tr>
         </thead>
         <tbody>
@@ -118,34 +116,30 @@
                 <td class="text-center py-2 px-4">{{ s.sumber_surat }}</td>
                 <td class="text-center py-2 px-4">{{ s.perihal }}</td>
                 <td class="text-center py-2 px-4">{{ s.disposisi.tujuan }}</td>
-                {% if user|in_groups:"Superadmin,Admin" %}
                 <td class="text-center py-4 px-4">
-  <div x-data="{ open: false }" class="relative inline-block text-left">
-    <!-- Tombol utama -->
-    <button @click="open = !open"
-            class="bg-gray-500 hover:bg-gray-600 text-white py-1 px-3 rounded inline-flex items-center">
-      Aksi
-      <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M19 9l-7 7-7-7"/>
-      </svg>
-    </button>
-
-    <!-- Dropdown menu -->
-    <div x-show="open" @click.away="open = false"
-         class="absolute right-0 mt-2 w-36 bg-white border border-gray-200 rounded shadow-lg z-10">
-      <a href="#" onclick="openDetailModal({{ s.id }})"
-         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Lihat</a>
-      <a href="{% url 'surat_edit' pk=s.id %}"
-         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</a>
-      <a href="{% url 'surat_hapus' pk=s.id %}"
-         onclick="return confirm('Yakin mau hapus?')"
-         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Hapus</a>
-    </div>
-  </div>
-</td>
-{% endif %}
-
+                    <div x-data="{ open: false }" class="relative inline-block text-left">
+                    <!-- Tombol utama -->
+                    <button @click="open = !open" class="bg-gray-500 hover:bg-gray-600 text-white py-1 px-3 rounded inline-flex items-center">
+                    Aksi
+                      <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                      </svg>
+                    </button>
+                    <!-- Dropdown menu -->
+                    <div x-show="open" @click.away="open = false"
+                        class="absolute right-0 mt-2 w-36 bg-white border border-gray-200 rounded shadow-lg z-10">
+                      <a href="#" onclick="openDetailModal({{ s.id }})"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Lihat</a>
+                      {% if user|in_groups:"Superadmin,Admin" %}
+                        <a href="{% url 'surat_edit' pk=s.id %}"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</a>
+                      <a href="{% url 'surat_hapus' pk=s.id %}"
+                        onclick="return confirm('Yakin mau hapus?')"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Hapus</a>
+                      {% endif %}
+                    </div>
+                  </div>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
