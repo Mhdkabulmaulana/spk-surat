@@ -74,9 +74,9 @@
   </div>
 
     <div class="flex justify-end space-x-2">
-        {% if user|in_groups:"Superadmin,Admin" %}
+        <!-- {% if user|in_groups:"Superadmin,Admin" %}
         <a href="{% url 'nilai_index' %}" class="bg-purple-500 hover:bg-purple-700 text-white px-4 py-2 rounded font-bold">📝 Beri Nilai</a>
-        {% endif %}
+        {% endif %} -->
         <a href="{% url 'grafik' %}" class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded font-bold">📊 Lihat Grafik</a>
     </div> 
 
