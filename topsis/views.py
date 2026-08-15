@@ -261,6 +261,9 @@ def disposisi_manage(request, surat_id):
 
 @login_required
 def disposisi_beri(request):
+    if not request.user.groups.filter(name="Kabid").exists():
+        return redirect("surat_list")
+
     query = request.GET.get("q", "").strip()
 
     surat_dengan_ranking = Hasil.objects.values_list(

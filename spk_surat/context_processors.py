@@ -11,7 +11,6 @@ def disposisi_notification(request):
         
         surat_dengan_ranking = Hasil.objects.values_list('surat_id', flat=True)
         
-        # ✅ CARA 1: Pisahkan filter - PALING SIMPLE & CLEAN
         pending_disposisi_count = Surat.objects.filter(
             id__in=surat_dengan_ranking
         ).filter(
