@@ -263,9 +263,18 @@ def disposisi_manage(request, surat_id):
 def disposisi_beri(request):
     query = request.GET.get("q", "").strip()
 
+    surat_dengan_ranking = Hasil.objects.values_list(
+        "surat_id",
+        flat=True
+    )
+
     surat_list = Surat.objects.filter(
-        disposisi__isnull=True
-    ).order_by("-id")
+        id__in=surat_dengan_ranking
+    ).filter(
+        Q(disposisi__isnull=True) |
+        Q(disposisi__tujuan__isnull=True) |
+        Q(disposisi__tujuan="")
+    ).distinct().order_by("-id")
 
     if query:
         surat_list = surat_list.filter(
