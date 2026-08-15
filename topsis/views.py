@@ -12,7 +12,7 @@ import logging
 from django.http import HttpResponse
 from xhtml2pdf import pisa
 from django.utils import timezone
-
+from core.decorators import group_required
 from django.http import HttpResponse
 from reportlab.lib.pagesizes import A4, landscape
 from django.template.loader import get_template

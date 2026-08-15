@@ -6,6 +6,7 @@ from django.db.models import Q
 from xhtml2pdf import pisa
 from django.utils import timezone
 import locale
+from core.decorators import group_required
 from django.http import HttpResponse
 from reportlab.lib.pagesizes import A4, landscape
 from django.template.loader import get_template
@@ -146,7 +147,7 @@ def export_pdf(request):
         return HttpResponse('Error saat membuat PDF <pre>' + html + '</pre>')
     return response
 
-@login_required
+@group_required("Kabid")
 def surat_tambah(request):
     form = SuratForm(request.POST or None, request.FILES or None)
 
