@@ -27,7 +27,7 @@ def is_admin(user):
 def is_kabid(user):
     return user.groups.filter(name="Kabid").exists()
 
-@login_required
+@group_required("Superadmin", "Admin")
 def nilai_index(request):
     data = Nilai.objects.select_related('surat','kriteria').order_by('surat__no_surat')
     paginator = Paginator(data, 10)
@@ -218,6 +218,7 @@ def exportdisposisi_pdf(request):
             status=500
         )
 
+@group_required("Kabid")
 def tambah_disposisi(request, surat_id):
     surat = get_object_or_404(Surat, id=surat_id)
     if request.method == "POST":
@@ -234,6 +235,7 @@ def tambah_disposisi(request, surat_id):
         form = DisposisiForm()
     return render(request, "disposisi/disposisi_form.html", {"form": form, "surat": surat})
 
+@group_required("Kabid")
 def disposisi_manage(request, surat_id):
     surat = get_object_or_404(Surat, id=surat_id)
     try:
@@ -259,7 +261,7 @@ def disposisi_manage(request, surat_id):
         "surat": surat
     })
 
-@login_required
+@group_required("Kabid")
 def disposisi_beri(request):
     if not request.user.groups.filter(name="Kabid").exists():
         return redirect("surat_list")

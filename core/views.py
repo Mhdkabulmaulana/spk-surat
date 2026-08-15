@@ -177,7 +177,7 @@ def surat_tambah(request):
         'sumbersurat_list': sumbersurat_list,
     })
 
-@login_required
+@group_required("Superadmin", "Admin")
 def surat_edit(request, pk):
     surat = get_object_or_404(Surat, pk=pk)
     form = SuratForm(request.POST or None, request.FILES or None, instance=surat)
@@ -195,7 +195,7 @@ def surat_edit(request, pk):
         'surat': surat
     })
 
-@login_required
+@group_required("Superadmin", "Admin")
 def surat_hapus(request, pk):
     surat = get_object_or_404(Surat, pk=pk)
     surat.delete()
@@ -203,7 +203,7 @@ def surat_hapus(request, pk):
     return redirect("surat_list")
 
 # PERIHAL #
-@login_required
+@group_required("Superadmin")
 def perihal_index(request):
     perihals = Perihal.objects.all().order_by('-id')
 
@@ -213,6 +213,7 @@ def perihal_index(request):
 
     return render(request, 'perihal/index.html', {'page_obj': page_obj})
 
+@group_required("Superadmin")
 def perihal_tambah(request):
     form = PerihalForm(request.POST or None, request.FILES or None)
     perihal_list = Perihal.objects.all()
@@ -226,6 +227,7 @@ def perihal_tambah(request):
         'perihal_list': perihal_list
     })
 
+@group_required("Superadmin")
 def perihal_edit(request, pk):
     perihal = get_object_or_404(Perihal, pk=pk)
     form = PerihalForm(request.POST or None, request.FILES or None, instance=perihal)
@@ -243,6 +245,7 @@ def perihal_edit(request, pk):
         'perihal': perihal
     })
 
+@group_required("Superadmin")
 def perihal_hapus(request, pk):
     perihal = get_object_or_404(Perihal, pk=pk)
     perihal.delete()
@@ -250,7 +253,7 @@ def perihal_hapus(request, pk):
     return redirect('perihal_index')
 
 # Status #
-@login_required
+@group_required("Superadmin")
 def status_index(request):
     statuses = Status.objects.all().order_by('-id')
 
@@ -260,6 +263,7 @@ def status_index(request):
 
     return render(request, 'status/index.html', {'page_obj': page_obj})
 
+@group_required("Superadmin")
 def status_tambah(request):
     form = StatusForm(request.POST or None, request.FILES or None)
     status_list = Status.objects.all()
@@ -273,6 +277,7 @@ def status_tambah(request):
         'status_list': status_list
     })
 
+@group_required("Superadmin")
 def status_edit(request, pk):
     status = get_object_or_404(Status, pk=pk)
     pesan = None
@@ -289,13 +294,14 @@ def status_edit(request, pk):
         'pesan': pesan
     })
 
+@group_required("Superadmin")
 def status_hapus(request, pk):
     status = get_object_or_404(Status, pk=pk)
     status.delete()
     return redirect('status_index')
 
 # Kriteria #
-@login_required
+@group_required("Superadmin")
 def kriteria_index(request):
     data = Kriteria.objects.all().order_by('-id')
 
@@ -305,6 +311,7 @@ def kriteria_index(request):
 
     return render(request, 'kriteria/kriteria_index.html', {'page_obj': page_obj})
 
+@group_required("Superadmin")
 def kriteria_tambah(request):
     form = KriteriaForm(request.POST or None)
     data = Kriteria.objects.all()
@@ -321,6 +328,7 @@ def kriteria_tambah(request):
         'data': data
     })
 
+@group_required("Superadmin")
 def kriteria_edit(request, pk):
     kriteria = get_object_or_404(Kriteria, pk=pk)
     form = KriteriaForm(request.POST or None, request.FILES or None, instance=kriteria)
@@ -338,13 +346,14 @@ def kriteria_edit(request, pk):
         'kriteria': kriteria
     })
 
+@group_required("Superadmin")
 def kriteria_hapus(request, pk):
     kriteria = get_object_or_404(Kriteria, pk=pk)
     kriteria.delete()
     return redirect('kriteria_index')
 
 # Sifat #
-@login_required
+@group_required("Superadmin")
 def sifat_index(request):
     data = Sifat.objects.all().order_by('-id')
 
@@ -354,6 +363,7 @@ def sifat_index(request):
 
     return render(request, 'sifat/sifat_index.html', {'page_obj': page_obj})
 
+@group_required("Superadmin")
 def sifat_tambah(request):
     form = SifatForm(request.POST or None)
     data = Sifat.objects.all()
@@ -370,6 +380,7 @@ def sifat_tambah(request):
         'data': data
     })
 
+@group_required("Superadmin")
 def sifat_edit(request, pk):
     sifat = get_object_or_404(Sifat, pk=pk)
     form = SifatForm(request.POST or None, request.FILES or None, instance=sifat)
@@ -387,13 +398,14 @@ def sifat_edit(request, pk):
         'sifat': sifat
     })
 
+@group_required("Superadmin")
 def sifat_hapus(request, pk):
     sifat = get_object_or_404(Sifat, pk=pk)
     sifat.delete()
     return redirect('sifat_index')
 
 # Sumber Surat #
-@login_required
+@group_required("Superadmin")
 def sumbersurat_index(request):
 
     data = Sumbersurat.objects.all().order_by('-id')
@@ -405,6 +417,7 @@ def sumbersurat_index(request):
     return render(request, 'sumbersurat/sumbersurat_index.html', {
         'page_obj': page_obj})
 
+@group_required("Superadmin")
 def sumbersurat_tambah(request):
     form = SumbersuratForm(request.POST or None)
     data = Sumbersurat.objects.all()
@@ -421,6 +434,7 @@ def sumbersurat_tambah(request):
         'data': data
     })
 
+@group_required("Superadmin")
 def sumbersurat_edit(request, pk):
     sumbersurat = get_object_or_404(Sumbersurat, pk=pk)
     form = SumbersuratForm(request.POST or None, request.FILES or None, instance=sumbersurat)
@@ -438,13 +452,14 @@ def sumbersurat_edit(request, pk):
         'sumbersurat': sumbersurat
     })
 
+@group_required("Superadmin")
 def sumbersurat_hapus(request, pk):
     sumbersurat = get_object_or_404(Sumbersurat, pk=pk)
     sumbersurat.delete()
     return redirect('sumbersurat_index')
 
 # Pengirim 
-@login_required
+@group_required("Superadmin")
 def pengirim_index(request):
 
     data = Pengirim.objects.all().order_by('-id')
@@ -456,6 +471,7 @@ def pengirim_index(request):
     return render(request, 'pengirim/pengirim_index.html', {
         'page_obj': page_obj})
 
+@group_required("Superadmin")
 def pengirim_tambah(request):
     form = PengirimForm(request.POST or None)
     data = Pengirim.objects.all()
@@ -472,6 +488,7 @@ def pengirim_tambah(request):
         'data': data
     })
 
+@group_required("Superadmin")
 def pengirim_edit(request, pk):
     pengirim = get_object_or_404(Pengirim, pk=pk)
     form = PengirimForm(request.POST or None, request.FILES or None, instance=pengirim)
@@ -489,6 +506,7 @@ def pengirim_edit(request, pk):
         'pengirim': pengirim
     })
 
+@group_required("Superadmin")
 def pengirim_hapus(request, pk):
     pengirim = get_object_or_404(Pengirim, pk=pk)
     pengirim.delete()
