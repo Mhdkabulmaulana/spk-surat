@@ -147,7 +147,7 @@ def export_pdf(request):
         return HttpResponse('Error saat membuat PDF <pre>' + html + '</pre>')
     return response
 
-@group_required("Kabid")
+@group_required("Superadmin", "Admin")
 def surat_tambah(request):
     form = SuratForm(request.POST or None, request.FILES or None)
 
