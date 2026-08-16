@@ -4,3 +4,8 @@ __pycache__/
 .vscode/
 .git/
 staticfiles/
+
+db.sqlite3
+auth_data.json
+auth_users_groups.json
+data_app.json
