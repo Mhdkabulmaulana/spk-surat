@@ -33,3 +33,6 @@ class DisposisiForm(forms.ModelForm):
                 'placeholder': 'Masukkan tujuan'
             }),
         }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['tujuan'].empty_label = 'Pilih tujuan'
