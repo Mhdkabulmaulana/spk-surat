@@ -36,6 +36,10 @@ class DisposisiForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        # Tujuan wajib dipilih
+        self.fields['tujuan'].required = True
+
+        # Ganti teks pilihan kosong
         choices = list(self.fields['tujuan'].choices)
 
         if choices and choices[0][0] == '':
