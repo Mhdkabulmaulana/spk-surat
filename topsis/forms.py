@@ -30,9 +30,12 @@ class DisposisiForm(forms.ModelForm):
             }),
             'tujuan': forms.Select(attrs={
                 'class': 'border rounded p-2 w-full',
-                'placeholder': 'Masukkan tujuan'
             }),
         }
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['tujuan'].empty_label = 'Pilih tujuan'
+
+        self.fields['tujuan'].choices = [
+            ('', 'Pilih tujuan')
+        ] + list(self.fields['tujuan'].choices)

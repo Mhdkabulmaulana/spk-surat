@@ -52,8 +52,6 @@ class Sifat(models.Model):
     def __str__(self):
         return self.nama
 
-from django.db import models
-
 class Disposisi(models.Model):
     TUJUAN_CHOICES = [
         ("Staf", "Staf"),
