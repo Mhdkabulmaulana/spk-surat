@@ -36,6 +36,9 @@ class DisposisiForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields['tujuan'].choices = [
-            ('', 'Pilih tujuan')
-        ] + list(self.fields['tujuan'].choices)
+        choices = list(self.fields['tujuan'].choices)
+
+        if choices and choices[0][0] == '':
+            choices[0] = ('', 'Pilih tujuan')
+
+        self.fields['tujuan'].choices = choices
