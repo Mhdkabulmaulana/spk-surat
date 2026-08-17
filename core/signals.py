@@ -27,11 +27,9 @@ def auto_run_topsis_on_surat_save(sender, instance, created, **kwargs):
         try:
             logger.info(f"[TOPSIS AUTO] Memproses surat: {instance.no_surat}")
             
-            # ✅ Step 1: Generate nilai otomatis untuk surat baru
             generate_nilai_otomatis()
             logger.info(f"[TOPSIS AUTO] Nilai generated untuk surat: {instance.no_surat}")
             
-            # ✅ Step 2: Hitung TOPSIS (ranking & preferensi)
             hitung_topsis(dry_run=False)
             logger.info(f"[TOPSIS AUTO] TOPSIS selesai untuk surat: {instance.no_surat}")
             

@@ -1,8 +1,7 @@
 import math
 import logging
 from collections import defaultdict
-from django.db import transaction
-from core.models import Surat, Kriteria, Disposisi
+from core.models import Surat, Kriteria
 from topsis.models import Nilai, Hasil
 
 logger = logging.getLogger(__name__)
@@ -51,67 +50,102 @@ def hitung_topsis(dry_run=False):
 
     surat_list = list(Surat.objects.all())
     kriteria_list = list(Kriteria.objects.all())
+
     if not surat_list or not kriteria_list:
         logger.info("TOPSIS: tidak ada surat atau kriteria untuk diproses.")
         return
 
-    # 🔹 Matriks keputusan
+    # Matriks keputusan
     X = defaultdict(dict)
+
     for s in surat_list:
         for k in kriteria_list:
             X[s.id][k.id] = 0
+
     for n in Nilai.objects.all():
         X[n.surat_id][n.kriteria_id] = n.nilai
 
-    # 🔹 Normalisasi
+    # Normalisasi
     pembagi = {}
+
     for k in kriteria_list:
-        jumlah = sum((X[s.id][k.id] ** 2 for s in surat_list))
+        jumlah = sum(
+            (X[s.id][k.id] ** 2 for s in surat_list)
+        )
         pembagi[k.id] = math.sqrt(jumlah) if jumlah != 0 else 1
 
     R = defaultdict(dict)
+
     for s in surat_list:
         for k in kriteria_list:
             R[s.id][k.id] = X[s.id][k.id] / pembagi[k.id]
 
-    # 🔹 Normalisasi terbobot
+    # Normalisasi terbobot
     V = defaultdict(dict)
+
     for s in surat_list:
         for k in kriteria_list:
             V[s.id][k.id] = R[s.id][k.id] * k.bobot
 
-    # 🔹 Solusi ideal
-    A_plus, A_min = {}, {}
+    # Solusi ideal
+    A_plus = {}
+    A_min = {}
+
     for k in kriteria_list:
         nilai_k = [V[s.id][k.id] for s in surat_list]
 
-        # cek jenis kriteria: benefit atau cost
-        if k.nama == "Deadline":  # contoh cost criteria
-            # untuk cost: ideal positif = min, ideal negatif = max
+        if k.nama == "Deadline":
             A_plus[k.id] = min(nilai_k)
             A_min[k.id] = max(nilai_k)
-        else:  # default benefit criteria
-            # untuk benefit: ideal positif = max, ideal negatif = min
+        else:
             A_plus[k.id] = max(nilai_k)
             A_min[k.id] = min(nilai_k)
 
-    # 🔹 Jarak
-    D_plus, D_min = {}, {}
-    for s in surat_list:
-        D_plus[s.id] = math.sqrt(sum((V[s.id][k.id] - A_plus[k.id]) ** 2 for k in kriteria_list))
-        D_min[s.id] = math.sqrt(sum((V[s.id][k.id] - A_min[k.id]) ** 2 for k in kriteria_list))
+    # Jarak
+    D_plus = {}
+    D_min = {}
 
-    # 🔹 Preferensi
+    for s in surat_list:
+        D_plus[s.id] = math.sqrt(
+            sum(
+                (V[s.id][k.id] - A_plus[k.id]) ** 2
+                for k in kriteria_list
+            )
+        )
+
+        D_min[s.id] = math.sqrt(
+            sum(
+                (V[s.id][k.id] - A_min[k.id]) ** 2
+                for k in kriteria_list
+            )
+        )
+
+    # Preferensi
     preferensi = {}
-    for s in surat_list:
-        pembagi_pref = (D_plus[s.id] + D_min[s.id])
-        preferensi[s.id] = 0 if pembagi_pref == 0 else D_min[s.id] / pembagi_pref
-        print("Surat:", s.no_surat)
-        print("D+:", D_plus[s.id], "D-:", D_min[s.id], "Preferensi:", preferensi[s.id])
 
-    # 🔹 Ranking
-    urut = sorted(preferensi.items(), key=lambda x: x[1], reverse=True)
+    for s in surat_list:
+        pembagi_pref = D_plus[s.id] + D_min[s.id]
+
+        preferensi[s.id] = (
+            0
+            if pembagi_pref == 0
+            else D_min[s.id] / pembagi_pref
+        )
+
+        print("Surat:", s.no_surat)
+        print("D+:", D_plus[s.id])
+        print("D-:", D_min[s.id])
+        print("Preferensi:", preferensi[s.id])
+
+    # Ranking
+    urut = sorted(
+        preferensi.items(),
+        key=lambda x: x[1],
+        reverse=True
+    )
+
     Hasil.objects.all().delete()
+
     for rank, (sid, pref) in enumerate(urut, start=1):
         Hasil.objects.create(
             surat_id=sid,
@@ -119,23 +153,20 @@ def hitung_topsis(dry_run=False):
             ranking=rank
         )
 
-    # 🔹 Disposisi tidak diisi otomatis
-    if dry_run:
-        logger.info("TOPSIS: dry_run aktif — tidak mengubah disposisi.")
-        for hasil in Hasil.objects.select_related('surat').all():
-            logger.info("Rekomendasi: surat=%s ranking=%s",
-                        hasil.surat.no_surat, hasil.ranking)
-        return
+    logger.info(
+        "TOPSIS selesai. Nilai dan ranking berhasil diperbarui. "
+        "Disposisi tidak dibuat otomatis."
+    )
 
-    with transaction.atomic():
-        for hasil in Hasil.objects.select_for_update().select_related('surat'):
-            disposisi_obj, created = Disposisi.objects.get_or_create(surat=hasil.surat)
-            if not disposisi_obj.tujuan:
-                # 🔹 Biarkan kosong, jangan isi otomatis
-                logger.info("TOPSIS: surat=%s disposisi dibiarkan kosong (ranking %s)",
-                            hasil.surat.no_surat, hasil.ranking)
-                disposisi_obj.save()
-            else:
-                # 🔹 Kalau sudah ada disposisi manual, tetap dipertahankan
-                logger.info("TOPSIS: surat=%s disposisi lama=%s (ranking %s)",
-                            hasil.surat.no_surat, disposisi_obj.tujuan, hasil.ranking)
+    if dry_run:
+        logger.info("TOPSIS: dry_run aktif.")
+
+    for hasil in Hasil.objects.select_related("surat").all():
+        logger.info(
+            "Rekomendasi: surat=%s ranking=%s preferensi=%s",
+            hasil.surat.no_surat,
+            hasil.ranking,
+            hasil.preferensi
+        )
+
+    return
