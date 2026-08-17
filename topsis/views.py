@@ -27,7 +27,7 @@ def is_admin(user):
 def is_kabid(user):
     return user.groups.filter(name="Kabid").exists()
 
-@group_required("Superadmin", "Admin")
+@login_required
 def nilai_index(request):
     data = Nilai.objects.select_related('surat','kriteria').order_by('surat__no_surat')
     paginator = Paginator(data, 10)
