@@ -88,11 +88,27 @@ def hasil(request):
 @login_required
 def grafik(request):
 
-    data = Hasil.objects.select_related('surat').order_by('ranking')
-    preferensi_data = list(data.values('surat__no_surat', 'preferensi'))
-
-    return render(request, 'topsis/grafik.html', {
-        'preferensi_data': preferensi_data
+    data_ranking = Hasil.objects.select_related('surat').order_by('ranking')
+        
+       
+    ranking_categories = {}
+    for h in data_ranking:
+        if h.ranking not in ranking_categories:
+            ranking_categories[h.ranking] = 0
+        ranking_categories[h.ranking] += 1
+        
+    ranking_labels_cat = [f"Rank {k}" for k in sorted(ranking_categories.keys())]
+    ranking_values_cat = [ranking_categories[k] for k in sorted(ranking_categories.keys())]
+        
+    preferensi_labels = [h.surat.no_surat for h in data_ranking]
+    preferensi_data = [float(h.preferensi) for h in data_ranking]  
+        
+    return render(request, 'topsis/grafik.html', {       
+        'ranking_labels': ranking_labels_cat,
+        'ranking_values': ranking_values_cat,
+            
+        'preferensi_labels': preferensi_labels,
+        'preferensi_data': preferensi_data,
     })
 
 @login_required

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 
@@ -7,9 +8,241 @@
     <h2 class="text-2xl font-bold text-yellow-700">GRAFIK HASIL TINGKAT URGENSI</h2>
   </div>
 
-  <div class="w-full max-w-full h-96">
-    <canvas id="chartPreferensi" class=""></canvas>
+  <div class="space-y-4">
+    
+    <div class="border border-gray-300 rounded-lg overflow-hidden">
+
+      <button 
+        onclick="toggleAccordion('accordion-1')" 
+        class="w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 flex justify-between items-center font-semibold text-gray-800 transition"
+      >
+        <span>Secara Ranking</span>
+        <span id="arrow-1" class="transition transform duration-300">›</span>
+      </button>
+      
+      <div 
+        id="accordion-1" 
+        class="hidden bg-white p-4 overflow-hidden transition-all duration-300"
+        style="max-height: 0; overflow: hidden;"
+      >
+        <div class="w-full" style="height: 400px; margin-bottom: 20px;">
+          <canvas id="chartRanking"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="border border-gray-300 rounded-lg overflow-hidden">
+
+      <button 
+        onclick="toggleAccordion('accordion-2')" 
+        class="w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 flex justify-between items-center font-semibold text-gray-800 transition"
+      >
+        <span>Secara Nilai Preferensi</span>
+        <span id="arrow-2" class="transition transform duration-300">›</span>
+      </button>
+      
+      <div 
+        id="accordion-2" 
+        class="hidden bg-white p-4 overflow-hidden transition-all duration-300"
+        style="max-height: 0; overflow: hidden;"
+      >
+        <div class="w-full" style="height: 400px; margin-bottom: 20px;">
+          <canvas id="chartPreferensi"></canvas>
+        </div>
+      </div>
+    </div>
+
   </div>
+
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const rankingLabels = {{ ranking_labels|safe }};
+const rankingValues = {{ ranking_values|safe }};
+const preferensiLabels = {{ preferensi_labels|safe }};
+const preferensiData = {{ preferensi_data|safe }};
+
+let chartRanking = null;
+let chartPreferensi = null;
+
+function toggleAccordion(id) {
+  const element = document.getElementById(id);
+  const arrowId = 'arrow-' + id.split('-')[1];
+  const arrow = document.getElementById(arrowId);
+  
+  const isHidden = element.classList.contains('hidden');
+  
+  if (isHidden) {
+    element.classList.remove('hidden');
+    element.style.maxHeight = '600px';
+    arrow.style.transform = 'rotate(90deg)';
+    
+    if (id === 'accordion-1' && chartRanking === null) {
+      setTimeout(renderChartRanking, 100);
+    } else if (id === 'accordion-2' && chartPreferensi === null) {
+      setTimeout(renderChartPreferensi, 100);
+    }
+  } else {
+    element.style.maxHeight = '0';
+    element.classList.add('hidden');
+    arrow.style.transform = 'rotate(0deg)';
+  }
+}
+
+function renderChartRanking() {
+  const canvas = document.getElementById('chartRanking');
+  if (!canvas) return;
+  
+  const ctx = canvas.getContext('2d');
+  
+  if (chartRanking !== null) {
+    chartRanking.destroy();
+  }
+  
+  chartRanking = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: rankingLabels,
+      datasets: [{
+        label: 'Jumlah Surat per Ranking',
+        data: rankingValues,
+        backgroundColor: [
+          '#4CAF50',  // Rank 1 - Hijau (Sangat Penting)
+          '#FFC107',  // Rank 2 - Kuning (Penting)
+          '#2196F3',  // Rank 3+ - Biru (Normal)
+          '#9C27B0',  // Rank 4+
+          '#FF5722',  // Rank 5+
+          '#00BCD4',  // Rank 6+
+        ],
+        borderColor: '#666',
+        borderWidth: 1,
+        borderRadius: 4,
+        hoverBackgroundColor: '#333',
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      indexAxis: 'x',
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top',
+          labels: {
+            font: { size: 14 },
+            padding: 15,
+          }
+        },
+        title: {
+          display: true,
+          text: 'Distribusi Surat Berdasarkan Ranking TOPSIS',
+          font: { size: 16, weight: 'bold' }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1,
+            callback: function(value) {
+              return parseInt(value);
+            }
+          },
+          title: {
+            display: true,
+            text: 'Jumlah Surat'
+          }
+        },
+        x: {
+          title: {
+            display: true,
+            text: 'Ranking'
+          }
+        }
+      }
+    }
+  });
+}
+
+function renderChartPreferensi() {
+  const canvas = document.getElementById('chartPreferensi');
+  if (!canvas) return;
+  
+  const ctx = canvas.getContext('2d');
+  
+  if (chartPreferensi !== null) {
+    chartPreferensi.destroy();
+  }
+  
+  chartPreferensi = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: preferensiLabels,
+      datasets: [{
+        label: 'Nilai Preferensi TOPSIS',
+        data: preferensiData,
+        borderColor: '#2E7D32',
+        backgroundColor: 'rgba(46, 125, 50, 0.1)',
+        borderWidth: 2.5,
+        fill: true,
+        tension: 0.4,  // Smooth curve
+        pointRadius: 5,
+        pointBackgroundColor: '#2E7D32',
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+        pointHoverRadius: 7,
+        pointHoverBackgroundColor: '#1B5E20',
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top',
+          labels: {
+            font: { size: 14 },
+            padding: 15,
+          }
+        },
+        title: {
+          display: true,
+          text: 'Nilai Preferensi TOPSIS per Surat (Dot Chart)',
+          font: { size: 16, weight: 'bold' }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          max: 1.0,
+          ticks: {
+            stepSize: 0.1,
+            callback: function(value) {
+              return value.toFixed(1);
+            }
+          },
+          title: {
+            display: true,
+            text: 'Nilai Preferensi (0 - 1)'
+          }
+        },
+        x: {
+          title: {
+            display: true,
+            text: 'Nomor Surat'
+          },
+          ticks: {
+            maxRotation: 45,
+            minRotation: 0,
+          }
+        }
+      }
+    }
+  });
+}
+</script>
 
 {% endblock %}
