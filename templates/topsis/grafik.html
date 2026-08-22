@@ -9,9 +9,7 @@
   </div>
 
   <div class="space-y-4">
-    
     <div class="border border-gray-300 rounded-lg overflow-hidden">
-
       <button 
         onclick="toggleAccordion('accordion-1')" 
         class="w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 flex justify-between items-center font-semibold text-gray-800 transition"
@@ -19,7 +17,7 @@
         <span>Secara Ranking</span>
         <span id="arrow-1" class="transition transform duration-300">›</span>
       </button>
-      
+
       <div 
         id="accordion-1" 
         class="hidden bg-white p-4 overflow-hidden transition-all duration-300"
@@ -32,7 +30,6 @@
     </div>
 
     <div class="border border-gray-300 rounded-lg overflow-hidden">
-
       <button 
         onclick="toggleAccordion('accordion-2')" 
         class="w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 flex justify-between items-center font-semibold text-gray-800 transition"
@@ -61,8 +58,10 @@
 <script>
 const rankingLabels = {{ ranking_labels|safe }};
 const rankingValues = {{ ranking_values|safe }};
+const rankingInfo = {{ ranking_info|safe }};
 const preferensiLabels = {{ preferensi_labels|safe }};
 const preferensiData = {{ preferensi_data|safe }};
+
 
 let chartRanking = null;
 let chartPreferensi = null;
@@ -85,6 +84,7 @@ function toggleAccordion(id) {
       setTimeout(renderChartPreferensi, 100);
     }
   } else {
+
     element.style.maxHeight = '0';
     element.classList.add('hidden');
     arrow.style.transform = 'rotate(0deg)';
@@ -106,20 +106,13 @@ function renderChartRanking() {
     data: {
       labels: rankingLabels,
       datasets: [{
-        label: 'Jumlah Surat per Ranking',
+        label: 'Ranking per Surat',
         data: rankingValues,
-        backgroundColor: [
-          '#4CAF50',  // Rank 1 - Hijau (Sangat Penting)
-          '#FFC107',  // Rank 2 - Kuning (Penting)
-          '#2196F3',  // Rank 3+ - Biru (Normal)
-          '#9C27B0',  // Rank 4+
-          '#FF5722',  // Rank 5+
-          '#00BCD4',  // Rank 6+
-        ],
-        borderColor: '#666',
+        backgroundColor: '#4CAF50', 
+        borderColor: '#2E7D32',
         borderWidth: 1,
         borderRadius: 4,
-        hoverBackgroundColor: '#333',
+        hoverBackgroundColor: '#2E7D32',
       }]
     },
     options: {
@@ -137,28 +130,50 @@ function renderChartRanking() {
         },
         title: {
           display: true,
-          text: 'Distribusi Surat Berdasarkan Ranking TOPSIS',
+          text: 'Prioritas Surat Berdasarkan Ranking',
           font: { size: 16, weight: 'bold' }
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              const dataIndex = context.dataIndex;
+              const rankingItem = rankingInfo[dataIndex];
+              return rankingItem.no_surat + ' - Rank ' + rankingItem.ranking;
+            },
+            beforeLabel: function() {
+              return '';
+            }
+          },
+          padding: 10,
+          titleFont: { size: 13 },
+          bodyFont: { size: 13 },
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          borderColor: '#4CAF50',
+          borderWidth: 1,
         }
       },
       scales: {
         y: {
           beginAtZero: true,
           ticks: {
-            stepSize: 1,
+            stepSize: 0.1,
             callback: function(value) {
-              return parseInt(value);
+              return value.toFixed(2);
             }
           },
           title: {
             display: true,
-            text: 'Jumlah Surat'
+            text: 'Normalized Ranking Value (1/Ranking)'
           }
         },
         x: {
           title: {
             display: true,
-            text: 'Ranking'
+            text: 'Nomor Surat'
+          },
+          ticks: {
+            maxRotation: 45,
+            minRotation: 0,
           }
         }
       }
@@ -181,19 +196,19 @@ function renderChartPreferensi() {
     data: {
       labels: preferensiLabels,
       datasets: [{
-        label: 'Nilai Preferensi TOPSIS',
+        label: 'Nilai Preferensi',
         data: preferensiData,
-        borderColor: '#2E7D32',
-        backgroundColor: 'rgba(46, 125, 50, 0.1)',
+        borderColor: '#4CAF50',  
+        backgroundColor: 'rgba(76, 175, 80, 0.1)',
         borderWidth: 2.5,
         fill: true,
-        tension: 0.4,  // Smooth curve
+        tension: 0.4,  
         pointRadius: 5,
-        pointBackgroundColor: '#2E7D32',
+        pointBackgroundColor: '#4CAF50',
         pointBorderColor: '#fff',
         pointBorderWidth: 2,
         pointHoverRadius: 7,
-        pointHoverBackgroundColor: '#1B5E20',
+        pointHoverBackgroundColor: '#2E7D32',
       }]
     },
     options: {
@@ -210,8 +225,19 @@ function renderChartPreferensi() {
         },
         title: {
           display: true,
-          text: 'Nilai Preferensi TOPSIS per Surat (Dot Chart)',
+          text: 'Skor Urgensi per Surat (Nilai Preferensi)',
           font: { size: 16, weight: 'bold' }
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return 'Nilai: ' + context.parsed.y.toFixed(3);
+            }
+          },
+          padding: 10,
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          borderColor: '#4CAF50',
+          borderWidth: 1,
         }
       },
       scales: {
