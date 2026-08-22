@@ -8,6 +8,13 @@
     <h2 class="text-2xl font-bold text-yellow-700">GRAFIK HASIL TINGKAT URGENSI</h2>
   </div>
 
+  <!-- ERROR MESSAGE (jika ada) -->
+  {% if error %}
+  <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+    <strong>Error:</strong> {{ error }}
+  </div>
+  {% endif %}
+
   <!-- ACCORDION CONTAINER -->
   <div class="space-y-4">
     
@@ -30,8 +37,11 @@
         class="hidden bg-white p-4 overflow-hidden transition-all duration-300"
         style="max-height: 0; overflow: hidden;"
       >
-        <div class="w-full" style="height: 400px; margin-bottom: 20px;">
+        <div id="chartRankingContainer" class="w-full" style="height: 400px; margin-bottom: 20px;">
           <canvas id="chartRanking"></canvas>
+        </div>
+        <div id="debugInfo" style="font-size: 12px; color: #666; margin-top: 10px; padding: 10px; background: #f5f5f5; border-radius: 4px; display: none;">
+          <!-- Debug info will be inserted here -->
         </div>
       </div>
     </div>
@@ -71,14 +81,51 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-// ✅ DATA DARI DJANGO VIEW (JSON)
-const rankingLabels = {{ ranking_labels|safe }};
-const rankingValues = {{ ranking_values|safe }};
-const rankingInfo = {{ ranking_info|safe }};
-const preferensiLabels = {{ preferensi_labels|safe }};
-const preferensiData = {{ preferensi_data|safe }};
+// ✅ DATA DARI DJANGO VIEW (JSON STRING)
+let rankingLabels = [];
+let rankingValues = [];
+let rankingInfo = [];
+let preferensiLabels = [];
+let preferensiData = [];
 
-// Global chart objects (untuk lazy loading)
+// Parse data dengan error handling
+try {
+  const rawRankingLabels = '{{ ranking_labels|safe }}';
+  const rawRankingValues = '{{ ranking_values|safe }}';
+  const rawRankingInfo = '{{ ranking_info|safe }}';
+  const rawPreferensiLabels = '{{ preferensi_labels|safe }}';
+  const rawPreferensiData = '{{ preferensi_data|safe }}';
+  
+  console.log('[DEBUG] Raw data loaded');
+  console.log('[DEBUG] rankingLabels:', rawRankingLabels.substring(0, 100));
+  
+  if (rawRankingLabels && rawRankingLabels !== '[]') {
+    rankingLabels = JSON.parse(rawRankingLabels);
+  }
+  if (rawRankingValues && rawRankingValues !== '[]') {
+    rankingValues = JSON.parse(rawRankingValues);
+  }
+  if (rawRankingInfo && rawRankingInfo !== '[]') {
+    rankingInfo = JSON.parse(rawRankingInfo);
+  }
+  if (rawPreferensiLabels && rawPreferensiLabels !== '[]') {
+    preferensiLabels = JSON.parse(rawPreferensiLabels);
+  }
+  if (rawPreferensiData && rawPreferensiData !== '[]') {
+    preferensiData = JSON.parse(rawPreferensiData);
+  }
+  
+  console.log('[DEBUG] Data parsed successfully');
+  console.log('[DEBUG] rankingLabels count:', rankingLabels.length);
+  console.log('[DEBUG] rankingValues count:', rankingValues.length);
+  
+} catch (e) {
+  console.error('[ERROR] Failed to parse data:', e);
+  document.getElementById('debugInfo').innerHTML = '<strong>Error parsing data:</strong> ' + e.message;
+  document.getElementById('debugInfo').style.display = 'block';
+}
+
+// Global chart objects
 let chartRanking = null;
 let chartPreferensi = null;
 
@@ -98,7 +145,7 @@ function toggleAccordion(id) {
     element.style.maxHeight = '600px';
     arrow.style.transform = 'rotate(90deg)';
     
-    // Render chart ketika accordion dibuka (LAZY LOADING)
+    // Render chart
     if (id === 'accordion-1' && chartRanking === null) {
       setTimeout(renderChartRanking, 100);
     } else if (id === 'accordion-2' && chartPreferensi === null) {
@@ -116,12 +163,30 @@ function toggleAccordion(id) {
 // CHART 1: BAR CHART - PRIORITAS SURAT BERDASARKAN RANKING
 // ========================================== 
 function renderChartRanking() {
+  console.log('[CHART] Rendering Chart 1 (Ranking)');
+  console.log('[CHART] Data points:', rankingLabels.length);
+  
+  // Validasi data
+  if (rankingLabels.length === 0 || rankingValues.length === 0) {
+    console.error('[CHART] No data to render!');
+    document.getElementById('debugInfo').innerHTML = '<strong>⚠️ No data available</strong><br>Check if there are any ranking results in the database.';
+    document.getElementById('debugInfo').style.display = 'block';
+    return;
+  }
+  
+  if (rankingLabels.length !== rankingValues.length) {
+    console.error('[CHART] Data mismatch!', rankingLabels.length, rankingValues.length);
+  }
+  
   const canvas = document.getElementById('chartRanking');
-  if (!canvas) return;
+  if (!canvas) {
+    console.error('[CHART] Canvas element not found!');
+    return;
+  }
   
   const ctx = canvas.getContext('2d');
   
-  // Destroy existing chart jika ada
+  // Destroy existing chart
   if (chartRanking !== null) {
     chartRanking.destroy();
   }
@@ -129,11 +194,11 @@ function renderChartRanking() {
   chartRanking = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: rankingLabels,  // ["Rank 1", "Rank 2", ..., "Rank 21"]
+      labels: rankingLabels,
       datasets: [{
         label: 'Nilai Preferensi',
-        data: rankingValues,  // [0.95, 0.85, ..., 0.10]
-        backgroundColor: '#4CAF50',  // Hijau aja
+        data: rankingValues,
+        backgroundColor: '#4CAF50',
         borderColor: '#2E7D32',
         borderWidth: 1,
         borderRadius: 4,
@@ -160,19 +225,18 @@ function renderChartRanking() {
         },
         tooltip: {
           callbacks: {
-            // ✅ Tooltip hanya tampil No Surat aja
             title: function(context) {
               const dataIndex = context[0].dataIndex;
-              const rankingItem = rankingInfo[dataIndex];
-              return rankingItem.no_surat;
+              if (rankingInfo[dataIndex]) {
+                return rankingInfo[dataIndex].no_surat;
+              }
+              return '';
             },
             label: function(context) {
               return 'Preferensi: ' + context.parsed.y.toFixed(3);
             }
           },
           padding: 10,
-          titleFont: { size: 13 },
-          bodyFont: { size: 13 },
           backgroundColor: 'rgba(0, 0, 0, 0.8)',
           borderColor: '#4CAF50',
           borderWidth: 1,
@@ -181,7 +245,7 @@ function renderChartRanking() {
       scales: {
         y: {
           beginAtZero: true,
-          max: 1.0,  // Y-axis max = 1.0 (preferensi normalized 0-1)
+          max: 1.0,
           ticks: {
             stepSize: 0.1,
             callback: function(value) {
@@ -202,18 +266,26 @@ function renderChartRanking() {
       }
     }
   });
+  
+  console.log('[CHART] Chart 1 rendered successfully');
 }
 
 // ========================================== 
 // CHART 2: LINE CHART - SKOR URGENSI PER SURAT
 // ========================================== 
 function renderChartPreferensi() {
+  console.log('[CHART] Rendering Chart 2 (Preferensi)');
+  
+  if (preferensiLabels.length === 0 || preferensiData.length === 0) {
+    console.error('[CHART] No preferensi data!');
+    return;
+  }
+  
   const canvas = document.getElementById('chartPreferensi');
   if (!canvas) return;
   
   const ctx = canvas.getContext('2d');
   
-  // Destroy existing chart jika ada
   if (chartPreferensi !== null) {
     chartPreferensi.destroy();
   }
@@ -225,11 +297,11 @@ function renderChartPreferensi() {
       datasets: [{
         label: 'Nilai Preferensi',
         data: preferensiData,
-        borderColor: '#4CAF50',  // Hijau aja
+        borderColor: '#4CAF50',
         backgroundColor: 'rgba(76, 175, 80, 0.1)',
         borderWidth: 2.5,
         fill: true,
-        tension: 0.4,  // Smooth curve
+        tension: 0.4,
         pointRadius: 5,
         pointBackgroundColor: '#4CAF50',
         pointBorderColor: '#fff',
@@ -295,7 +367,15 @@ function renderChartPreferensi() {
       }
     }
   });
+  
+  console.log('[CHART] Chart 2 rendered successfully');
 }
+
+// Log untuk verifikasi
+console.log('[INIT] Chart initialization complete');
+console.log('[INIT] Data summary:');
+console.log('[INIT] - Ranking data: ' + rankingLabels.length + ' items');
+console.log('[INIT] - Preferensi data: ' + preferensiLabels.length + ' items');
 </script>
 
 {% endblock %}

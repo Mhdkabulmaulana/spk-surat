@@ -9,6 +9,7 @@ from core.models import Disposisi, Surat
 from .forms import NilaiForm, DisposisiForm
 from .utils import generate_nilai_otomatis, hitung_topsis
 import logging
+import json
 from django.http import HttpResponse
 from xhtml2pdf import pisa
 from django.utils import timezone
@@ -87,32 +88,76 @@ def hasil(request):
 
 @login_required
 def grafik(request):
-
-    data_ranking = Hasil.objects.select_related('surat').order_by('ranking')
-    ranking_data = []
-    ranking_labels = []
-    ranking_values = []
+    try:
+        data_ranking = Hasil.objects.select_related('surat').order_by('ranking')
         
-    for h in data_ranking:
-        ranking_data.append({
-            'no_surat': h.surat.no_surat,
-            'ranking': h.ranking,
-            'preferensi': float(h.preferensi)
+        logger.info(f"[GRAFIK] Total data ranking: {data_ranking.count()}")
+        
+        if not data_ranking.exists():
+            logger.warning("[GRAFIK] Tidak ada data ranking!")
+            return render(request, 'topsis/grafik.html', {
+                'ranking_labels': [],
+                'ranking_values': [],
+                'ranking_info': [],
+                'preferensi_labels': [],
+                'preferensi_data': [],
+                'error': 'Tidak ada data TOPSIS'
+            })
+        
+        ranking_data = []
+        ranking_labels = []
+        ranking_values = []
+        
+        for h in data_ranking:
+            try:
+                no_surat = h.surat.no_surat if h.surat else "Unknown"
+                ranking = h.ranking
+                preferensi = float(h.preferensi)
+                
+                ranking_data.append({
+                    'no_surat': no_surat,
+                    'ranking': ranking,
+                    'preferensi': preferensi
+                })
+                ranking_labels.append(f"Rank {ranking}")
+                ranking_values.append(preferensi)
+                
+                logger.debug(f"  - {no_surat}: Rank {ranking}, Pref {preferensi:.3f}")
+                
+            except Exception as e:
+                logger.error(f"[GRAFIK] Error processing ranking data: {e}")
+                continue
+        
+        logger.info(f"[GRAFIK] Processed {len(ranking_labels)} data points")
+        
+        preferensi_labels = [h.surat.no_surat for h in data_ranking if h.surat]
+        preferensi_data = [float(h.preferensi) for h in data_ranking]
+        
+        logger.info(f"[GRAFIK] Chart 1 labels: {ranking_labels[:3]}... (total: {len(ranking_labels)})")
+        logger.info(f"[GRAFIK] Chart 1 values: {ranking_values[:3]}... (total: {len(ranking_values)})")
+        
+        context = {
+            'ranking_labels': json.dumps(ranking_labels), 
+            'ranking_values': json.dumps(ranking_values),  
+            'ranking_info': json.dumps(ranking_data),    
+            'preferensi_labels': json.dumps(preferensi_labels),
+            'preferensi_data': json.dumps(preferensi_data),
+        }
+        
+        logger.info("[GRAFIK] Context prepared successfully")
+        
+        return render(request, 'topsis/grafik.html', context)
+        
+    except Exception as e:
+        logger.error(f"[GRAFIK] Fatal error: {e}", exc_info=True)
+        return render(request, 'topsis/grafik.html', {
+            'ranking_labels': [],
+            'ranking_values': [],
+            'ranking_info': [],
+            'preferensi_labels': [],
+            'preferensi_data': [],
+            'error': f'Error: {str(e)}'
         })
-    ranking_labels.append(f"Rank {h.ranking}")
-    ranking_values.append(float(h.preferensi))
-        
-    preferensi_labels = [h.surat.no_surat for h in data_ranking]
-    preferensi_data = [float(h.preferensi) for h in data_ranking]
-        
-    return render(request, 'topsis/grafik.html', {
-        'ranking_labels': ranking_labels,  
-        'ranking_values': ranking_values,  
-        'ranking_info': ranking_data,  
-            
-        'preferensi_labels': preferensi_labels,
-        'preferensi_data': preferensi_data,
-    })
 
 @login_required
 def proses_topsis_view(request):
