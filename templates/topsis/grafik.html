@@ -8,9 +8,14 @@
     <h2 class="text-2xl font-bold text-yellow-700">GRAFIK HASIL TINGKAT URGENSI</h2>
   </div>
 
+  <!-- ACCORDION CONTAINER -->
   <div class="space-y-4">
     
+    <!-- ========================================== -->
+    <!-- ACCORDION 1: PRIORITAS SURAT BERDASARKAN RANKING -->
+    <!-- ========================================== -->
     <div class="border border-gray-300 rounded-lg overflow-hidden">
+      <!-- HEADER ACCORDION 1 -->
       <button 
         onclick="toggleAccordion('accordion-1')" 
         class="w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 flex justify-between items-center font-semibold text-gray-800 transition"
@@ -19,6 +24,7 @@
         <span id="arrow-1" class="transition transform duration-300">›</span>
       </button>
       
+      <!-- CONTENT ACCORDION 1 -->
       <div 
         id="accordion-1" 
         class="hidden bg-white p-4 overflow-hidden transition-all duration-300"
@@ -29,8 +35,12 @@
         </div>
       </div>
     </div>
->
+
+    <!-- ========================================== -->
+    <!-- ACCORDION 2: SKOR URGENSI PER SURAT     -->
+    <!-- ========================================== -->
     <div class="border border-gray-300 rounded-lg overflow-hidden">
+      <!-- HEADER ACCORDION 2 -->
       <button 
         onclick="toggleAccordion('accordion-2')" 
         class="w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 flex justify-between items-center font-semibold text-gray-800 transition"
@@ -39,6 +49,7 @@
         <span id="arrow-2" class="transition transform duration-300">›</span>
       </button>
       
+      <!-- CONTENT ACCORDION 2 -->
       <div 
         id="accordion-2" 
         class="hidden bg-white p-4 overflow-hidden transition-all duration-300"
@@ -54,18 +65,26 @@
 
 </div>
 
+<!-- ========================================== -->
+<!-- SCRIPT: CHART.JS & ACCORDION LOGIC       -->
+<!-- ========================================== -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
+// ✅ DATA DARI DJANGO VIEW (JSON)
 const rankingLabels = {{ ranking_labels|safe }};
 const rankingValues = {{ ranking_values|safe }};
 const rankingInfo = {{ ranking_info|safe }};
 const preferensiLabels = {{ preferensi_labels|safe }};
 const preferensiData = {{ preferensi_data|safe }};
 
+// Global chart objects (untuk lazy loading)
 let chartRanking = null;
 let chartPreferensi = null;
 
+// ========================================== 
+// ACCORDION TOGGLE FUNCTION
+// ========================================== 
 function toggleAccordion(id) {
   const element = document.getElementById(id);
   const arrowId = 'arrow-' + id.split('-')[1];
@@ -74,28 +93,35 @@ function toggleAccordion(id) {
   const isHidden = element.classList.contains('hidden');
   
   if (isHidden) {
+    // OPEN
     element.classList.remove('hidden');
     element.style.maxHeight = '600px';
     arrow.style.transform = 'rotate(90deg)';
     
+    // Render chart ketika accordion dibuka (LAZY LOADING)
     if (id === 'accordion-1' && chartRanking === null) {
       setTimeout(renderChartRanking, 100);
     } else if (id === 'accordion-2' && chartPreferensi === null) {
       setTimeout(renderChartPreferensi, 100);
     }
   } else {
+    // CLOSE
     element.style.maxHeight = '0';
     element.classList.add('hidden');
     arrow.style.transform = 'rotate(0deg)';
   }
 }
 
+// ========================================== 
+// CHART 1: BAR CHART - PRIORITAS SURAT BERDASARKAN RANKING
+// ========================================== 
 function renderChartRanking() {
   const canvas = document.getElementById('chartRanking');
   if (!canvas) return;
   
   const ctx = canvas.getContext('2d');
   
+  // Destroy existing chart jika ada
   if (chartRanking !== null) {
     chartRanking.destroy();
   }
@@ -103,11 +129,11 @@ function renderChartRanking() {
   chartRanking = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: rankingLabels, 
+      labels: rankingLabels,  // ["Rank 1", "Rank 2", ..., "Rank 21"]
       datasets: [{
         label: 'Nilai Preferensi',
-        data: rankingValues,  
-        backgroundColor: '#4CAF50',  
+        data: rankingValues,  // [0.95, 0.85, ..., 0.10]
+        backgroundColor: '#4CAF50',  // Hijau aja
         borderColor: '#2E7D32',
         borderWidth: 1,
         borderRadius: 4,
@@ -134,6 +160,7 @@ function renderChartRanking() {
         },
         tooltip: {
           callbacks: {
+            // ✅ Tooltip hanya tampil No Surat aja
             title: function(context) {
               const dataIndex = context[0].dataIndex;
               const rankingItem = rankingInfo[dataIndex];
@@ -154,7 +181,7 @@ function renderChartRanking() {
       scales: {
         y: {
           beginAtZero: true,
-          max: 1.0, 
+          max: 1.0,  // Y-axis max = 1.0 (preferensi normalized 0-1)
           ticks: {
             stepSize: 0.1,
             callback: function(value) {
@@ -177,12 +204,16 @@ function renderChartRanking() {
   });
 }
 
+// ========================================== 
+// CHART 2: LINE CHART - SKOR URGENSI PER SURAT
+// ========================================== 
 function renderChartPreferensi() {
   const canvas = document.getElementById('chartPreferensi');
   if (!canvas) return;
   
   const ctx = canvas.getContext('2d');
   
+  // Destroy existing chart jika ada
   if (chartPreferensi !== null) {
     chartPreferensi.destroy();
   }
@@ -194,11 +225,11 @@ function renderChartPreferensi() {
       datasets: [{
         label: 'Nilai Preferensi',
         data: preferensiData,
-        borderColor: '#4CAF50', 
+        borderColor: '#4CAF50',  // Hijau aja
         backgroundColor: 'rgba(76, 175, 80, 0.1)',
         borderWidth: 2.5,
         fill: true,
-        tension: 0.4,  
+        tension: 0.4,  // Smooth curve
         pointRadius: 5,
         pointBackgroundColor: '#4CAF50',
         pointBorderColor: '#fff',
