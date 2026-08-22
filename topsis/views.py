@@ -89,27 +89,27 @@ def hasil(request):
 def grafik(request):
 
     data_ranking = Hasil.objects.select_related('surat').order_by('ranking')
-
     ranking_data = []
+    ranking_labels = []
+    ranking_values = []
+        
     for h in data_ranking:
         ranking_data.append({
             'no_surat': h.surat.no_surat,
             'ranking': h.ranking,
-            'normalized': 1 / h.ranking if h.ranking > 0 else 0  
+            'preferensi': float(h.preferensi)
         })
+    ranking_labels.append(f"Rank {h.ranking}")
+    ranking_values.append(float(h.preferensi))
         
-    ranking_labels = [item['no_surat'] for item in ranking_data]
-    ranking_values = [item['normalized'] for item in ranking_data]
-    ranking_info = ranking_data
-
     preferensi_labels = [h.surat.no_surat for h in data_ranking]
     preferensi_data = [float(h.preferensi) for h in data_ranking]
         
     return render(request, 'topsis/grafik.html', {
-        'ranking_labels': ranking_labels,
-        'ranking_values': ranking_values,
-        'ranking_info': ranking_info, 
-
+        'ranking_labels': ranking_labels,  
+        'ranking_values': ranking_values,  
+        'ranking_info': ranking_data,  
+            
         'preferensi_labels': preferensi_labels,
         'preferensi_data': preferensi_data,
     })
